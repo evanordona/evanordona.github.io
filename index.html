@@ -7451,15 +7451,15 @@ In this beginner friendly data science project we're diving into the world of NB
 
 <p>To start off, we'll be on the lookout for players who stand out with the highest field goal percentage, three-point percentage, and free throw percentage. These metrics offer us a glimpse into the precision and consistency of a player's shot-making across different scenarios on the court. By identifying these top performers, we can gain insights into what sets them apart in terms of accuracy and reliability in scoring.</p>
 <p>We will also be taking a look at player positions and investigating whether shooting percentages exhibit variations based on these roles—namely, guards, forwards, and centers. Exploring this aspect can unveil whether certain positions are more likely to achieving higher shooting efficiency or if players in specific roles exhibit distinct shooting patterns.</p>
-<p>Furthermore, we're also going to try and determine if there's a connection between a player's physical attributes, like height, and their shooting efficiency. This exploration aims to see if there are factors beyond simply skill that contribute to a player's success in making a basket.</p>
-<p>Lastly, we'll be examining how player statistics evolve over the course of their careers. We'll try to identify trends that show whether players tend to improve or experience declines in their shooting efficiency as their careers progress.</p>
+<p>Furthermore, we'll be examining how player statistics evolve over the course of their careers. We'll try to identify trends that show whether players tend to improve or experience declines in their shooting efficiency as their careers progress.</p>
+<p>Lastly, we're also going to try and determine if there's a connection between a player's physical attributes, like height, and their shooting efficiency. This exploration aims to see if there are factors beyond simply skill that contribute to a player's success in making a basket.</p>
 </p>
 <h2 style="text-align: center">Data Collection</h2>
 <p>
 In this section, we will import all the data we need using Python. Python will be the language used throughout the project with relevant Python libraries. Python is a great beginner friendly language that data scientists use the industry. I have found a dataset that has all NBA Player statistics since the 1950s up to 2017. Unfortunately, we will be leaving out the statistics of the last few years since the dataset does not contain up to the current year 2023. However, experts and myself agree that within the past couple years the strategy of the game has shifted to shooting much more three point shots which may skew some of the data. 
 
 <p>Data Source: <a href="https://www.kaggle.com/datasets/drgilermo/nba-players-stats">https://www.kaggle.com/datasets/drgilermo/nba-players-stats</a></p>
-<p>Let's finally begin with importing the libraries we will be using.</p>
+<p>Let's finally begin with importing the libraries we will be using. This can be done using pip install <i>library_name</i>. See <a href="https://pip.pypa.io/en/stable/cli/pip_install/">https://pip.pypa.io/en/stable/cli/pip_install/</a> for more details.</p>
 </p>
 </h1></h1></div>
 </div>
@@ -7469,7 +7469,7 @@ In this section, we will import all the data we need using Python. Python will b
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -7482,7 +7482,8 @@ In this section, we will import all the data we need using Python. Python will b
 <span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">linregress</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
 </pre></div>
 </div>
 </div>
@@ -7508,7 +7509,7 @@ As you can see there are quite a bit of imports that we will be using in this pr
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">player_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"player_data.csv"</span><span class="p">)</span>
@@ -7523,7 +7524,7 @@ As you can see there are quite a bit of imports that we will be using in this pr
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -7689,7 +7690,7 @@ Looking at this dataset, we can see that it contains every players' height, weig
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">season_stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"Seasons_Stats.csv"</span><span class="p">)</span>
@@ -7704,7 +7705,7 @@ Looking at this dataset, we can see that it contains every players' height, weig
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8018,7 +8019,7 @@ The first first thing I notice about this dataset is the amount fo NaN values an
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 style="text-align: center">Data Cleaning</h2>
 <p>
-Now that we have our dataset imported, we must clean and tidy it up so we can manipulate the dataset easier. Based on the <code>player_data</code> dataframe, there isn't much we need to do/clean. We won't be using this dataset much, besides looking at the players heights and weights. Let's extract the columns we need from this dataset.
+Now that we have our dataset imported, we must clean and tidy it up so we can manipulate the dataset easier. It is also important for data visualization and machine learning. This is because having NA values in our dataset can cause errors when trying to plot a graph or train a model. Based on the <code>player_data</code> dataframe, there isn't much we need to do/clean. We won't be using this dataset much, besides looking at the players heights and weights. Let's simply extract the columns we will be using from this dataset.
 </p>
 </div>
 </div>
@@ -8038,11 +8039,13 @@ Now that we have our dataset imported, we must clean and tidy it up so we can ma
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">player_data</span> <span class="o">=</span> <span class="n">player_data</span><span class="p">[[</span><span class="s1">'name'</span><span class="p">,</span> <span class="s1">'position'</span><span class="p">,</span> <span class="s1">'height'</span><span class="p">,</span> <span class="s1">'weight'</span><span class="p">,</span> <span class="s1">'year_start'</span><span class="p">]]</span>
-<span class="c1"># let's rename the columns to match the other dataset we will be merging on</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Retrieves only the columns specified</span>
+<span class="n">player_data</span> <span class="o">=</span> <span class="n">player_data</span><span class="p">[[</span><span class="s1">'name'</span><span class="p">,</span> <span class="s1">'position'</span><span class="p">,</span> <span class="s1">'height'</span><span class="p">,</span> <span class="s1">'weight'</span><span class="p">,</span> <span class="s1">'year_start'</span><span class="p">]]</span>
+
+<span class="c1"># Rename the columns to match the other dataset we will be merging on</span>
 <span class="n">player_data</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'name'</span><span class="p">:</span><span class="s1">'Player'</span><span class="p">,</span> <span class="s1">'position'</span><span class="p">:</span><span class="s1">'Pos'</span><span class="p">,</span>
                               <span class="s1">'height'</span><span class="p">:</span><span class="s1">'Height'</span><span class="p">,</span> <span class="s1">'weight'</span><span class="p">:</span><span class="s1">'Weight'</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
                               
@@ -8057,7 +8060,7 @@ Now that we have our dataset imported, we must clean and tidy it up so we can ma
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8197,7 +8200,7 @@ Now that we have our dataset imported, we must clean and tidy it up so we can ma
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">season_stats</span><span class="o">.</span><span class="n">columns</span>
@@ -8211,7 +8214,7 @@ Now that we have our dataset imported, we must clean and tidy it up so we can ma
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>Index(['Unnamed: 0', 'Year', 'Player', 'Pos', 'Age', 'Tm', 'G', 'GS', 'MP',
        'PER', 'TS%', '3PAr', 'FTr', 'ORB%', 'DRB%', 'TRB%', 'AST%', 'STL%',
@@ -8233,7 +8236,7 @@ Now that we have our dataset imported, we must clean and tidy it up so we can ma
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>
 There are a bunch of columns that we might not understand what they mean! Take a look at this glossary reference to understand the column names and what they represent more in depth and clearly: <a href="https://www.basketball-reference.com/about/glossary.html">https://www.basketball-reference.com/about/glossary.html</a>
-<p>Since we're focusing on shooting efficiency in this project, let's only keep the columns that have to do with what we're looking for by dropping all the irrelevant columns.</p>
+<p>Since we're focusing on shooting efficiency in this project, let's only keep the columns that have to do with what we're looking for by dropping all the irrelevant columns. Additionally, we're going to rename all the columns removing all numbers and special characters. This will make sure we have no problems on later down the line.</p>
 </p>
 </div>
 </div>
@@ -8243,7 +8246,7 @@ There are a bunch of columns that we might not understand what they mean! Take a
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">season_stats</span> <span class="o">=</span> <span class="n">season_stats</span><span class="p">[[</span><span class="s1">'Year'</span><span class="p">,</span> <span class="s1">'Player'</span><span class="p">,</span> <span class="s1">'Pos'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">,</span> <span class="s1">'G'</span><span class="p">,</span> <span class="s1">'PTS'</span><span class="p">,</span> <span class="s1">'TS%'</span><span class="p">,</span> <span class="s1">'3P'</span><span class="p">,</span> <span class="s1">'3PA'</span><span class="p">,</span> <span class="s1">'3P%'</span><span class="p">,</span> <span class="s1">'2P'</span><span class="p">,</span> <span class="s1">'2PA'</span><span class="p">,</span> <span class="s1">'2P%'</span><span class="p">,</span> <span class="s1">'FT'</span><span class="p">,</span> <span class="s1">'FTA'</span><span class="p">,</span> <span class="s1">'FT%'</span><span class="p">]]</span>
@@ -8259,7 +8262,7 @@ There are a bunch of columns that we might not understand what they mean! Take a
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8532,7 +8535,7 @@ There are a bunch of columns that we might not understand what they mean! Take a
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">player_data</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -8546,7 +8549,7 @@ There are a bunch of columns that we might not understand what they mean! Take a
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>Player        0
 Pos           1
@@ -8563,10 +8566,11 @@ dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">player_data</span> <span class="o">=</span> <span class="n">player_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Drops any row with a NA value</span>
+<span class="n">player_data</span> <span class="o">=</span> <span class="n">player_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 <span class="n">player_data</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -8578,7 +8582,7 @@ dtype: int64</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>Player        0
 Pos           0
@@ -8595,7 +8599,7 @@ dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">season_stats</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -8609,7 +8613,7 @@ dtype: int64</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>Year         67
 Player       67
@@ -8637,10 +8641,11 @@ dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">season_stats</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'Player'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">,</span> <span class="s1">'TSP'</span><span class="p">,</span> <span class="s1">'TwoPP'</span><span class="p">,</span> <span class="s1">'FTP'</span><span class="p">,</span> <span class="s1">'ThreePP'</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Drops all rows that have NA values in the following columns</span>
+<span class="n">season_stats</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'Player'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">,</span> <span class="s1">'TSP'</span><span class="p">,</span> <span class="s1">'TwoPP'</span><span class="p">,</span> <span class="s1">'FTP'</span><span class="p">,</span> <span class="s1">'ThreePP'</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">season_stats</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -8652,7 +8657,7 @@ dtype: int64</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>Year       0
 Player     0
@@ -8680,7 +8685,7 @@ dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">season_stats</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
@@ -8694,7 +8699,7 @@ dtype: int64</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[13]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8843,8 +8848,9 @@ dtype: int64</pre>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>
-We're left with players from 1980 on having no na values. This is actually because there was no 3 point line in the NBA until 1979!
-Looking at the dataframe, there seems to be players with an asterik next to their name. We will also convert the heights into inches. Let's take care of that for the last step of data cleaning.
+We're left with players from 1980 on having no na values. This is actually because there was no 3 point line in the NBA until 1979! We're going to keep our dataframe like this - having no NA values. This is because later on in the tutorial we will be training models and we can't have players with NA values in that step. Unfortunately, this will remove a bunch of players, even some greats (such as Wilt Chamberlain), from out dataset. If your following along, you can don't have to remove the players with NA values if you want a more accurate representation of the top players that we will be exploring soon.
+
+<p>Looking at this updated dataframe, there seems to be players with an asterik next to their name. This * represents that the player has been inducted into the Hall of Fame. Let's remove the asterik so there won't be any complications in the future when it comes to merging or printing out names. We will also convert the heights into inches, as well as calculate PPG for each season of player. Let's take care of that for the last step of data cleaning.</p>
 </p>
 </div>
 </div>
@@ -8854,11 +8860,16 @@ Looking at the dataframe, there seems to be players with an asterik next to thei
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">season_stats</span><span class="p">[</span><span class="s1">'Player'</span><span class="p">]</span> <span class="o">=</span> <span class="n">season_stats</span><span class="p">[</span><span class="s1">'Player'</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'*'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Replaces (removes) all *s in the Player column with nothing. </span>
+<span class="n">season_stats</span><span class="p">[</span><span class="s1">'Player'</span><span class="p">]</span> <span class="o">=</span> <span class="n">season_stats</span><span class="p">[</span><span class="s1">'Player'</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'*'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+
+<span class="c1"># Changes all heights from FT-IN to inches</span>
 <span class="n">player_data</span><span class="p">[</span><span class="s1">'Height'</span><span class="p">]</span> <span class="o">=</span> <span class="n">player_data</span><span class="p">[</span><span class="s1">'Height'</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'-'</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="mi">12</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'-'</span><span class="p">)[</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="c1"># Calculates PPG and resets the index of the dataframe</span>
 <span class="n">season_stats</span><span class="p">[</span><span class="s1">'PPG'</span><span class="p">]</span> <span class="o">=</span> <span class="n">season_stats</span><span class="p">[</span><span class="s1">'PTS'</span><span class="p">]</span> <span class="o">/</span> <span class="n">season_stats</span><span class="p">[</span><span class="s1">'G'</span><span class="p">]</span>
 <span class="n">season_stats</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
@@ -8873,7 +8884,7 @@ Looking at the dataframe, there seems to be players with an asterik next to thei
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\EvanO\AppData\Local\Temp\ipykernel_13028\213419686.py:2: SettingWithCopyWarning: 
+<pre>C:\Users\EvanO\AppData\Local\Temp\ipykernel_31000\3965854011.py:5: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
@@ -8883,7 +8894,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -9158,7 +9169,10 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>In the next step, we might want to compare career stats of the players. Let's prepare a new dataframe calculating the players career statistics.</p>
+<p>In the next step, we might want to compare career stats of the players. Let's prepare a new dataframe calculating the players career statistics. We can also calculate career PPG by simply dividing the amount of points they have score by the amount of games scored. 
+
+<p>Let's also merge the player data onto the <code>career_stats</code> data frame so we can have all the data on one data frame.</p>
+</p>
 </div>
 </div>
 </div>
@@ -9167,10 +9181,11 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">career_stats</span> <span class="o">=</span> <span class="n">season_stats</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Player'</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Calculates Stats by grouping all season stats by the player's name</span>
+<span class="n">career_stats</span> <span class="o">=</span> <span class="n">season_stats</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Player'</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
     <span class="s1">'G'</span><span class="p">:</span> <span class="s1">'sum'</span><span class="p">,</span>
     <span class="s1">'PTS'</span><span class="p">:</span> <span class="s1">'sum'</span><span class="p">,</span>
     <span class="s1">'TSP'</span><span class="p">:</span> <span class="s1">'mean'</span><span class="p">,</span>
@@ -9185,8 +9200,10 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
     <span class="s1">'FTP'</span><span class="p">:</span> <span class="s1">'mean'</span><span class="p">,</span>
 <span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 
+<span class="c1"># Calulates career PPG average</span>
 <span class="n">career_stats</span><span class="p">[</span><span class="s1">'PPG'</span><span class="p">]</span> <span class="o">=</span> <span class="n">career_stats</span><span class="p">[</span><span class="s1">'PTS'</span><span class="p">]</span> <span class="o">/</span> <span class="n">career_stats</span><span class="p">[</span><span class="s1">'G'</span><span class="p">]</span>
 
+<span class="c1"># Merging on player_data dataframe so we can have access to their Position, Height, Weight, and the year they got drafted into the NBA</span>
 <span class="n">career_stats</span> <span class="o">=</span> <span class="n">career_stats</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">player_data</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">'Player'</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">'Player'</span><span class="p">)</span>
 <span class="n">career_stats</span>
 </pre></div>
@@ -9199,7 +9216,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[15]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[13]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -9498,7 +9515,13 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>
-Now we are ready to begin exploring our data and visualizing it! The visualization will help us analyze what we want to know. Let's take a look at some basic graphs.
+In this next part of our tutorial, we're going to be exploring and visualizing the data we cleaned by making cool graphs. These plots will help us analyze the questions we're focused on. Let's remember the  questions that we're interested in. 
+
+<p>Q1: Who are the best shooters in different categories like three-pointers, two-pointers, and free throws?<br/>
+Q2: Which types of players, like guards, forwards, or centers, are the best at shooting? <br/>
+Q3: How do players' shooting skills change as they get older?<br/>
+Q4: How shooting has changed over different periods in the history of the game?<br/></p>
+<p>Let's first take a look at some basic graphs we can make.</p>
 </p>
 </div>
 </div>
@@ -9508,16 +9531,18 @@ Now we are ready to begin exploring our data and visualizing it! The visualizati
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Creates a histogram plot showing the distribution of height of all the nba players</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">career_stats</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">'Height'</span><span class="p">,</span>  <span class="n">color</span><span class="o">=</span><span class="s1">'blue'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Height (inches)'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Number of Players'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Distribution of NBA Players Heights'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
+<span class="c1"># Creates a histogram plot showing the distribution of positions of all the nba players</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">career_stats</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">'Pos'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'blue'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Position'</span><span class="p">)</span>
@@ -9547,21 +9572,43 @@ Now we are ready to begin exploring our data and visualizing it! The visualizati
 </div>
 </div>
 </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>
+These basic graphs showing the distribution of heights and positions of NBA players, are fascinating and simple to make. 
+
+<p>We can finally begin exploring Question 1: <i>Who are the best shooters in different categories like three-pointers, two-pointers, and free throws?</i></p>
+</p>
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">filtered_data</span> <span class="o">=</span> <span class="n">career_stats</span><span class="p">[</span><span class="n">career_stats</span><span class="p">[</span><span class="s1">'ThreePA'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">]</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Feel free to change code and test out plots that might interest you!</span>
+<span class="n">filtered_data</span> <span class="o">=</span> <span class="n">career_stats</span><span class="p">[</span><span class="n">career_stats</span><span class="p">[</span><span class="s1">'ThreePA'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">]</span> <span class="c1"># can test different numbers</span>
 
+<span class="c1"># Sorts to get the top players leading in 3P% with over 1000 3PA</span>
 <span class="n">top_3pt_players</span> <span class="o">=</span> <span class="n">filtered_data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'ThreePP'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Gets certain columns we can look at and gets only the top 20 from the dataframe</span>
 <span class="n">top_3pt_players</span> <span class="o">=</span> <span class="n">top_3pt_players</span><span class="p">[[</span><span class="s1">'Player'</span><span class="p">,</span> <span class="s1">'G'</span><span class="p">,</span> <span class="s1">'ThreePA'</span><span class="p">,</span> <span class="s1">'ThreePP'</span><span class="p">,</span> <span class="s1">'Pos'</span><span class="p">,</span> <span class="s1">'year_start'</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 
+<span class="c1"># Plots a scatter plot </span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">top_3pt_players</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">'Player'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">'ThreePP'</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">'Player'</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Rotates the x-axis</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Player'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Three-Point Percentage'</span><span class="p">)</span>
@@ -9590,10 +9637,11 @@ Now we are ready to begin exploring our data and visualizing it! The visualizati
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">filtered_data</span> <span class="o">=</span> <span class="n">career_stats</span><span class="p">[</span><span class="n">career_stats</span><span class="p">[</span><span class="s1">'TwoPA'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2000</span><span class="p">]</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Feel free to change code and test out plots that might interest you!</span>
+<span class="n">filtered_data</span> <span class="o">=</span> <span class="n">career_stats</span><span class="p">[</span><span class="n">career_stats</span><span class="p">[</span><span class="s1">'TwoPA'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2000</span><span class="p">]</span>
 
 <span class="n">top_2pt_players</span> <span class="o">=</span> <span class="n">filtered_data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'TwoPP'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">top_2pt_players</span> <span class="o">=</span> <span class="n">top_2pt_players</span><span class="p">[[</span><span class="s1">'Player'</span><span class="p">,</span> <span class="s1">'G'</span><span class="p">,</span> <span class="s1">'TwoPA'</span><span class="p">,</span> <span class="s1">'TwoPP'</span><span class="p">,</span> <span class="s1">'Pos'</span><span class="p">,</span> <span class="s1">'year_start'</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
@@ -9628,7 +9676,7 @@ Now we are ready to begin exploring our data and visualizing it! The visualizati
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">filtered_data</span> <span class="o">=</span> <span class="n">career_stats</span><span class="p">[</span><span class="n">career_stats</span><span class="p">[</span><span class="s1">'FTA'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2000</span><span class="p">]</span>
@@ -9669,7 +9717,10 @@ Now we are ready to begin exploring our data and visualizing it! The visualizati
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>
-How about we look at players shooting percentages over their years and their points per game.
+I encourage anyone following along to play with the code and see how the plots change! There certainly are some big time names that NBA fans should recognize. There are also lot of names that you might not recognize since some of these players are from an older era of the game. Here's a suggestion, try and change the code so you can see the year the player started playing in the NBA next to the players name on the x-axis.
+
+<p>Moving on to Q2: <i>Which types of players, like guards, forwards, or centers, are the best at shooting.</i></p>
+<p>To figure this out, let's group the data of all the players we found in the previous question and make a pie chart of their positions.</p>
 </p>
 </div>
 </div>
@@ -9679,10 +9730,78 @@ How about we look at players shooting percentages over their years and their poi
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">players</span> <span class="o">=</span> <span class="n">top_3pt_players</span><span class="p">[</span><span class="s1">'Player'</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Group the data by positions and count the occurrences</span>
+<span class="n">all_top_players</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">top_3pt_players</span><span class="p">,</span> <span class="n">top_2pt_players</span><span class="p">,</span> <span class="n">top_ft_players</span><span class="p">])</span>
+<span class="n">position_counts</span> <span class="o">=</span> <span class="n">all_top_players</span><span class="p">[</span><span class="s1">'Pos'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+
+<span class="c1"># Create a pie chart</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">position_counts</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">position_counts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">autopct</span><span class="o">=</span><span class="s1">'</span><span class="si">%1.1f%%</span><span class="s1">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Top Shooters by Position'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>Text(0.5, 1.0, 'Top Shooters by Position')</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img alt="No description has been provided for this image" class="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAnwAAAKSCAYAAABIowakAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjcuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8pXeV/AAAACXBIWXMAAA9hAAAPYQGoP6dpAACQ/ElEQVR4nOzdd3RU1cIF8H2nT2bSeychjUBClY6AdBB7b2Dvgk991s9n12fvPCs2FAQpKtKki9J7Cz2k994mM3O/P5BoBFJn5kzZv7Wy3stwZ+5OTNk5955zJFmWZRARERGR21KIDkBERERE9sXCR0REROTmWPiIiIiI3BwLHxEREZGbY+EjIiIicnMsfERERERujoWPiIiIyM2x8BERERG5ORY+IiIiIjfHwkdEZxgxYgR69OghOobT+OKLLyBJErZu3So6ik2tWbMGkiRhzZo1rR574sQJSJKEL774wu65iMj2WPiI7EySpDa9teWXbmcVFRVh2rRpSElJgV6vR0hICPr3749HH30U1dXVdj9/W7z00ktYuHCh6BhCTJ06tdnXhI+PD3r27Ik33ngDDQ0NDsnw7bff4u2333bIuYjIcVSiAxC5u6+//rrZ+1999RVWrFhxxuPdunWza47S0lL069cPlZWVuOWWW5CSkoKSkhLs3r0bM2bMwN133w2j0WjXDG3x0ksv4YorrsAll1wiOooQWq0Wn376KQCgvLwcP/zwAx5++GFs2bIFs2fPtum5zj//fNTV1UGj0TQ99u2332Lv3r2YPn16s2NjY2NRV1cHtVpt0wxE5BgsfER2dsMNNzR7f+PGjVixYsUZj9vbZ599hpMnT2LDhg0YPHhws3+rrKxs9kvf3dTX10Oj0UChcP6LGiqVqtnXxj333IMBAwZgzpw5ePPNNxEREWGzcykUCuh0ujYdK0lSm48lIufj/D/9iDxATU0NHnroIURHR0Or1SI5ORmvv/46ZFludpwkSbjvvvswa9YsJCcnQ6fToW/fvli3bl2r5zh69CiUSiUGDhx4xr/5+Pic9Zf5/v37MXLkSHh5eSEyMhKvvvrqGccUFhbi1ltvRWhoKHQ6HXr27Ikvv/yyQx+jJEmoqanBl19+2XRZc+rUqU3/npOTg1tuuQWhoaHQarXo3r07Pv/882bnOX1f2uzZs/HUU08hMjISXl5eqKysRGNjI5599lkkJiZCp9MhMDAQQ4cOxYoVK1r9/AFAbW0t7rzzTgQGBsLHxwc33XQTysrKmv59ypQpCAoKQmNj4xnPHTt2LJKTk9t0nr9TKBQYMWIEgFP30QFt/5zPnj0bffv2hbe3N3x8fJCWloZ33nmn6d//eQ/fiBEjsHjxYmRmZjZ9/rt06dJ07rPdw7dq1SoMGzYMBoMBfn5+uPjii3HgwIFmxzzzzDOQJAlHjhzB1KlT4efnB19fX9x8882ora1t9+eEiNqPI3xEgsmyjIsuugirV6/Grbfeil69emHZsmV45JFHkJOTg7feeqvZ8WvXrsWcOXPwwAMPQKvV4sMPP8T48eOxefPmFidaxMbGwmKx4Ouvv8aUKVNazVVWVobx48fjsssuw1VXXYV58+bh0UcfRVpaGiZMmAAAqKurw4gRI3DkyBHcd999iIuLw9y5czF16lSUl5dj2rRp7foYv/76a9x2223o378/7rjjDgBA165dAQAFBQUYOHBgU+kNDg7GkiVLcOutt6KysvKMS5DPP/88NBoNHn74YTQ0NECj0eCZZ57Byy+/3HSOyspKbN26Fdu3b8eYMWNa/Zzcd9998PPzwzPPPIOMjAzMmDEDmZmZTcXpxhtvxFdffYVly5bhwgsvbHpefn4+Vq1ahf/85z+tnuNsjh49CgAIDAxs8+d8xYoVuPbaazFq1Cj897//BQAcOHAAGzZsaDrmn5588klUVFQgOzu76b9JS5f5f/31V0yYMAHx8fF45plnUFdXh/feew9DhgzB9u3bm8riaVdddRXi4uLw8ssvY/v27fj0008REhLSlI+I7EgmIoe699575b9/6y1cuFAGIL/wwgvNjrviiitkSZLkI0eOND0GQAYgb926temxzMxMWafTyZdeemmL583Pz5eDg4NlAHJKSop81113yd9++61cXl5+xrHDhw+XAchfffVV02MNDQ1yWFiYfPnllzc99vbbb8sA5G+++abpMZPJJA8aNEg2Go1yZWVluz9Gg8EgT5ky5YxMt956qxweHi4XFxc3e/yaa66RfX195draWlmWZXn16tUyADk+Pr7psdN69uwpT5o0qcXP09nMnDlTBiD37dtXNplMTY+/+uqrMgB50aJFsizLssVikaOiouSrr7662fPffPNNWZIk+dixYy2eZ8qUKbLBYJCLiorkoqIi+ciRI/JLL70kS5Ikp6eny7Lc9s/5tGnTZB8fH9lsNp/zfKc/V6tXr256bNKkSXJsbOwZxx4/flwGIM+cObPpsV69eskhISFySUlJ02O7du2SFQqFfNNNNzU99p///EcGIN9yyy3NXvPSSy+VAwMDW/ycEJFt8JIukWC//PILlEolHnjggWaPP/TQQ5BlGUuWLGn2+KBBg9C3b9+m92NiYnDxxRdj2bJlsFgs5zxPaGgodu3ahbvuugtlZWX43//+h+uuuw4hISF4/vnnz7h8bDQam91LptFo0L9/fxw7dqxZ9rCwMFx77bVNj6nVajzwwAOorq7G2rVrO/Qx/pMsy/jhhx8wefJkyLKM4uLiprdx48ahoqIC27dvb/acKVOmQK/XN3vMz88P+/btw+HDh1s837nccccdzSYt3H333VCpVPjll18AnLr8ev311+PHH39EVVVV03GzZs3C4MGDERcX1+o5ampqEBwcjODgYCQkJOCJJ57AoEGDsGDBAgBt/5z7+fmhpqamzZer2ysvLw87d+7E1KlTERAQ0PR4eno6xowZ0/Q5+bu77rqr2fvDhg1DSUkJKisr7ZKRiP7CwkckWGZmJiIiIuDt7d3s8dOzdjMzM5s9npiYeMZrJCUloba2FkVFRS2eKzw8HDNmzEBeXh4yMjLw7rvvIjg4GE8//TQ+++yzZsdGRUVBkqRmj/n7+ze7Zy0zMxOJiYlnTIb4Z/b2foz/VFRUhPLycnz88cdNZej028033wzg1H1tf3e2cvXcc8+hvLwcSUlJSEtLwyOPPILdu3e3eO6/++fn3mg0Ijw8vOneOgC46aabUFdX11TQMjIysG3bNtx4441tOodOp8OKFSuwYsUKrFu3DllZWdiwYQPi4+MBtP1zfs899yApKQkTJkxAVFQUbrnlFixdurTNH2trTp/nbPclduvWDcXFxaipqWn2eExMTLP3/f39AaDZ1xQR2Qfv4SPyQJIkISkpCUlJSZg0aRISExMxa9Ys3HbbbU3HKJXKsz73nyOBjmC1WgGcmvF8rvsP09PTm73/z9E94NQyJEePHsWiRYuwfPlyfPrpp3jrrbfwv//9r9nH3hmpqano27cvvvnmG9x000345ptvoNFocNVVV7Xp+UqlEqNHj+50jpCQEOzcuRPLli3DkiVLsGTJEsycORM33XTTWSd4OIIzfU0ReRqO8BEJFhsbi9zc3GaXAAHg4MGDTf/+d2e7HHno0CF4eXkhODi43eePj4+Hv78/8vLy2v3c2NhYHD58uKmQnfbP7O35GP85qggAwcHB8Pb2hsViwejRo8/6FhIS0qbMAQEBuPnmm/Hdd98hKysL6enpeOaZZ9r03H9+7qurq5GXl3fG5ISbbroJq1atQl5eHr799ltMmjSpaTSrs9r6OQdOXYafPHkyPvzwQxw9ehR33nknvvrqKxw5cuScr3+2z/+5cgCnRjD/6eDBgwgKCoLBYGjTaxGR/bHwEQk2ceJEWCwWvP/++80ef+uttyBJUtOM2NP++OOPZverZWVlYdGiRRg7duw5R1AAYNOmTWdcYgOAzZs3o6SkpENLhkycOBH5+fmYM2dO02NmsxnvvfcejEYjhg8f3u6P0WAwoLy8vNlxSqUSl19+OX744Qfs3bv3jBytXco+raSkpNn7RqMRCQkJbd7F4uOPP2625MqMGTNgNpvP+G907bXXQpIkTJs2DceOHbPpmott/Zz/82NVKBRNo6AtfbwGgwEVFRWt5ggPD0evXr3w5ZdfNvvvtXfvXixfvhwTJ05sz4dFRHbGS7pEgk2ePBkjR47Ek08+iRMnTqBnz55Yvnw5Fi1ahOnTpzctS3Jajx49MG7cuGbLsgDAs88+2+J5vv76a8yaNQuXXnop+vbtC41GgwMHDuDzzz+HTqfDE0880e7sd9xxBz766CNMnToV27ZtQ5cuXTBv3jxs2LABb7/9dtM9e+35GPv27Ytff/21aZHhuLg4DBgwAK+88gpWr16NAQMG4Pbbb0dqaipKS0uxfft2/PrrrygtLW01b2pqKkaMGIG+ffsiICAAW7duxbx583Dfffe16eM1mUwYNWoUrrrqKmRkZODDDz/E0KFDcdFFFzU7Ljg4GOPHj8fcuXPh5+eHSZMmteOz2rK2fs5vu+02lJaW4oILLkBUVBQyMzPx3nvvoVevXi3u6tK3b1/MmTMH//rXv3DeeefBaDRi8uTJZz32tddew4QJEzBo0CDceuutTcuy+Pr6tnnUlIgcROAMYSKP9M9lWWRZlquqquQHH3xQjoiIkNVqtZyYmCi/9tprstVqbXYcAPnee++Vv/nmGzkxMVHWarVy7969my2rcS67d++WH3nkEblPnz5yQECArFKp5PDwcPnKK6+Ut2/f3uzY4cOHy927dz/jNaZMmXLGkh0FBQXyzTffLAcFBckajUZOS0trtnRHez/GgwcPyueff76s1+tlAM2WaCkoKJDvvfdeOTo6Wlar1XJYWJg8atQo+eOPP2465vRSI3Pnzj0jwwsvvCD3799f9vPzk/V6vZySkiK/+OKLzZZaOZvTy7KsXbtWvuOOO2R/f3/ZaDTK119/fbMlSf7u+++/lwHId9xxR4uv/Xenl2VpTVs+5/PmzZPHjh0rh4SEyBqNRo6JiZHvvPNOOS8vr+mYsy3LUl1dLV933XWyn5+fDKDpv/fZlmWRZVn+9ddf5SFDhsh6vV728fGRJ0+eLO/fv7/ZMaeXZSkqKmr2+OnP6/Hjx1v9mImocyRZ5t2yRK5CkiTce++9Z1waJeezaNEiXHLJJVi3bh2GDRsmOg4ReTjew0dEZAeffPIJ4uPjMXToUNFRiIh4Dx8RkS3Nnj0bu3fvxuLFi/HOO++0edYrEZE9sfAREdnQtddeC6PRiFtvvRX33HOP6DhERAAA3sNHRERE5OZ4Dx8RERGRm2PhIyIiInJzLHxEREREbo6Fj4iIiMjNsfARERERuTkWPiIiIiI3x8JHRERE5OZY+IiIiIjcHAsfERERkZtj4SMiIiJycyx8RERERG6OhY+IiIjIzbHwEREREbk5Fj4iIiIiN8fCR0REROTmWPiIiIiI3BwLHxEREZGbY+EjIiIicnMsfERERERujoWPiIiIyM2x8BERERG5ORY+IiIiIjfHwkdERETk5lj4iIiIiNwcCx8RERGRm2PhIyIiInJzLHxEREREbo6Fj4iIiMjNsfARERERuTkWPiIiIiI3x8JHRERE5OZY+IiIiIjcHAsfERERkZtj4SMiIiJycyx8RERERG6OhY+IiIjIzbHwEREREbk5Fj4iIiIiN8fCR0REROTmWPiIiIiI3BwLHxEREZGbY+EjIiIicnMsfERERERujoWPiIiIyM2x8BER0Rny8/Mxbdo0JCQkQKfTITQ0FEOGDMGMGTNQW1srOh4RtZNKdAAiInIux44dw5AhQ+Dn54eXXnoJaWlp0Gq12LNnDz7++GNERkbioosuEh2TiNpBkmVZFh2CiIicx/jx47Fv3z4cPHgQBoPhjH+XZRmSJAlIRkQdxUu6RETUpKSkBMuXL8e999571rIHgGWPyAWx8BERUZMjR45AlmUkJyc3ezwoKAhGoxFGoxGPPvqooHRE1FEsfERE1KrNmzdj586d6N69OxoaGkTHIaJ24qQNIiJqkpCQAEmSkJGR0ezx+Ph4AIBerxcRi4g6iSN8RETUJDAwEGPGjMH777+Pmpoa0XGIyEZY+IiIqJkPP/wQZrMZ/fr1w5w5c3DgwAFkZGTgm2++wcGDB6FUKkVHJKJ24rIsRER0hry8PLz00ktYvHgxsrOzodVqkZqaiiuvvBL33HMPvLy8REckonZg4SMiIiJyc7ykS0REROTmWPiIiIiI3BwLHxEREZGbY+EjIiIicnMsfERERERujoWPiIiIyM2x8BERERG5ORY+IiIiIjfHwkdERETk5lSiAxARdZTFKqOyrhGV9Y2oNVlgMlvRaLHCZLH++f/lU++bTz3WaLFClgGVQoJSIUGtVECpkJreVyklKBUKqBUStGolfHQqeOvUMOpUMGiUkCRJ9IdMRNQhLHxE5DRqTWbkV9Qjv7K+6X9Lq02orG9ERd3pN/OpklfXiGqTGY7aHFIhAQatCj46NYxaFbx1Khh1KgR4aRDso0WItw4h3tpTbz46hPpo4aXhj1gicg7cS5eIHKawqh4nimtxorgGWWW1TaWuoLIeeRX1qKo3i45oU0atCiHeWgR7axHpp0dMoBe6BBqa/jfAoBEdkYg8BAsfEdlUVX0jjhfX4HhxDY4V1TT9/xPFNahqcK9C11neOhViA70QG2hAl0AvxAYYkBBqRHKoNwxajg4Ske2w8BFRh2WV1mJfbiX251Zgf14l9udWIreiXnQslydJQEyAF1LCvNEt3AcpYT5IDfdBdICe9xESUYew8BFRqyxWGYcLq7Avp/JUwcurwP7cSlS62SVYZ2fUqpAc5o1u4d5Ij/RDn1g/dA02sgQSUatY+IjoDDUNZuw4WY6tmaXYeqIMO06WocZkER2LzsJXr0bvGD/0ifFH31h/9Iz2g5GXg4noH1j4iAgFlfXYcuJUuduaWYoDeVWwWPmjwRUpFRKSQr3RJ8YPfWP9MSA+EJF+etGxiEgwFj4iD1RR14gNR4qx/nARfjtSjKzSOtGRyI66BHphUNcgDEkIxOCuQZwdTOSBWPiIPIDFKmNnVjnWHSrC+sNF2JVdwRE8DyVJQGq4D4YlBuP8pCD0iw2ARsVNl4jcHQsfkZvKLa/D2kNFWHeoCL8fLUFFXaPoSOSEvDRKDIoPxKhuoRiTGopgb63oSERkByx8RG7kaFE1lu7Nx9K9+diTUyE6DrkYhQT0ivbD2O5hGNc9DHFBBtGRiMhGWPiIXNzenIpTJW9fPo4UVouOQ24kIcSIcd1DMTY1DOlRvlz+hciFsfARuRhZlrEtswxL9+Zj2f58Trgghwj31WFc9zBc1CsCfWL8RcchonZi4SNyEUcKqzF/ezYW7cxFTjlLHonTJdALF/eKxKW9I9GFl32JXAILH5ETK6sx4cdduZi/PRu7snlPHjmfXtF+uKRXBCb3jECgkRM+iJwVCx+RkzGZrVh5oADzd+RgTUYhGi38FiXnp1JIGJYYhEt6R2Jc9zDo1ErRkYjob1j4iJzE/txKfLf5JH7anYvyWi6hQq7Lz0uNy3pH4fqBMegabBQdh4jAwkckVH2jBT/tysWsTSexM6tcdBwimxsYH4DrB8RiXPcwLvBMJBALH5EAJ4pr8PXGTMzbls0FkckjBBk1uKJvNK4fEIPoAC/RcYg8DgsfkYPIsozVGYX48vdMrDtcBH7nkSeSJGBoQhCmDOqCUd1CuLYfkYOw8BHZWZ3JgjlbTmLm7yeQWVIrOg6R0+gabMBtw+JxWZ9IaFWc5EFkTyx8RHZSVmPCF7+fwNcbM1FaYxIdh8hpBRm1mDIoFjcOioWfl0Z0HCK3xMJHZGNZpbX4dP0xfL81G3WNFtFxiFyGXq3Elf2icNvQeMQE8j4/Ilti4SOykf25lfho3VEs3p0Hs5XfVkQdpZCAcd3DcPeIrkiP8hMdh8gtsPARddKWE6V4b9URrDtUJDoKkdu5ICUED45OQlqUr+goRC6NhY+og3ZmleON5RlYf7hYdBQitze6Wwimj05Cj0gWP6KOYOEjaqd9uRV4a8Uh/HqgUHQUIo8zJjUU00cnonsEix9Re7DwEbXRkcIqvLniEJbszecaekQCSRIwNjUU00cnoVu4j+g4RC6BhY+oFSeKa/DOysNYtDMHnItB5DwkCZiYFo5Hx6VwVi9RK1j4iM6hpLoBb/16CLM3Z3HWLZET0ygVuHFQLB64IBG+XmrRcYicEgsf0T+YzFbM3HAc768+gqp6s+g4RNRGfl5q3DcyATcN6gKNSiE6DpFTYeEj+pule/Pw8pKD3AKNyIXFBnrh0fEpmJgWLjoKkdNg4SMCsDenAs//vB+bjpeKjkJENtI31h9PTuqGPjH+oqMQCcfCRx6tsLIery7LwPzt2ZyQQeSmLu0diScmdkOwt1Z0FCJhWPjII5ktVny+4Tje+fUwakzc75bI3fnoVHh4XDJuGBALhUISHYfI4Vj4yOPsOFmGJxbsxYG8StFRiMjB0iJ98eKlPbhHL3kcFj7yGJX1jXh16UF8u+kkL98SeTCFBFw3IAaPjEuBr57LuJBnYOEjj/DTrlw89/N+FFU1iI5CRE4iyKjB4xO64fK+UaKjENkdCx+5tZMltXhq0V6sO1QkOgoROamB8QH47+XpiA00iI5CZDcsfOSWLFYZH687hndWHkJ9o1V0HCJycnq1Ev8en4ypg7tAkjipg9wPCx+5nWNF1Xho7i7sOFkuOgoRuZgBcQF47Yqe3JuX3A4LH7kNWZYxc8MJvLrsIEf1iKjDvDRKPDo+BTcNiuVoH7kNFj5yC9lltXhk7m78caxEdBQichMD40+N9kUHcLSPXB8LH7m82ZtP4oXFB1DdYBYdhYjcjJdGiccmpODGgRztI9fGwkcuq7CyHo/N34NVBwtFRyEiNzc8KRhvXNUTQUZuz0auiYWPXNKv+wvw8LxdKK9tFB2FiDxEsLcWb17VE8MSg0VHIWo3Fj5yKSazFS8vOYCZG06IjkJEHkiSgDvOj8fDY5OhVipExyFqMxY+chknS2px33fbsTu7QnQUIvJwPaP98N41vbl8C7kMFj5yCYt35+GxH3ajihMziMhJeGtVeOHSHri4V6ToKEStYuEjp1bfaMHzP+/HrE0nRUchIjqry/tE4flLusNLoxIdheicWPjIaR0tqsZ93+7AgbxK0VGIiFqUHOqNj27siy5B3I+XnBMLHzmlJXvy8PDcXagxWURHISJqEx+dCm9f0wsXpISKjkJ0BhY+ciqyLOON5YfwwZoj4FcmEbkaSQKmj0rCA6MSuFAzORUWPnIaVfWNmD57J1ZyIWUicnGju4Xirat7wlunFh2FCAALHzmJY0XVuP2rrThaVCM6ChGRTcQHG/DxjX2REOItOgoRCx+Jt+pgAabN3omqei65QkTuxaBR4vUre2JCWrjoKOThWPhIqA9WH8EbyzNg5VchEbmx6aMTMX10kugY5MFY+EiI+kYLHpq7C4t354mOQkTkEJf1icQrl6VDo+KWbOR4LHzkcGU1Jtz21VZsyywTHYWIyKEGxgfgoxv6wdeLkznIsVj4yKEyS2owdeYWHC/m5Awi8kxdgw2YObU/9+Elh2LhI4fZmVWOW7/YgpIak+goRERCBRo0+GRKP/SJ8RcdhTwECx85xPJ9+Zg2eyfqGrlzBhERAGhVCrx1dS9M5AxecgAWPrK7L38/gWd/2seZuERE/yBJwGPjU3Dn8K6io5CbY+Eju5FlGS/9cgCfrD8uOgoRkVO7c3g8Hp/QTXQMcmMsfGQXFquMR+buwvwdOaKjEBG5hGv7x+DFS3pAoeAevGR7LHxkcyazFQ98twNL9+WLjkJE5FIuTA/HW1f3glrJtfrItlj4yKbqGy248+ttWHuoSHQUIiKXNDI5GDNu6AudWik6CrkRFj6ymeoGM279Ygs2HS8VHYWIyKX17xKAz6b2g7eOCzSTbbDwkU1U1DbippmbsSurXHQUIiK30CPSB1/dMgABBo3oKOQGWPio04qrG3DDp5twML9KdBQiIrfSNdiAb28fiFAfnego5OJY+KhT8irqcP2nm3CsiFulERHZQ3ywAbPvGIgQb5Y+6jhOA6IOK6isxzUfb2TZIyKyo2NFNbjuk00orm4QHYVcGAsfdUhRVQOu/WQjMktqRUchInJ7Rwqrcd0nG1HC0kcdxMJH7VZWY8INvIxLRORQhwqqcf2nm1BWYxIdhVwQCx+1S0VdI274bBMyCjhBg4jI0Q7mV+H6TzehvJalj9qHhY/arLrBjJs+34x9uZWioxAReaz9eZW44bNNqKhrFB2FXAgLH7VJrcmMm7nOHhGRU9ibU4kbP9uEqnqWPmobFj5qVX2jBbd9uRVbTpSJjkJERH/anV2B27/aigazRXQUcgEsfNQis8WKe2Ztx+9HS0RHISKif9h4rBTTZ++E1coldallLHzUoicX7MWqg4WiYxAR0Tks2ZuP/1u0V3QMcnIsfHROby7PwJytWaJjEBFRK2ZtOom3fz0kOgY5MRY+OqtvN53Eu6uOiI5BRERt9PavhzFrU6boGOSkWPjoDCv2F/DyABGRC/q/hXuxdG+e6BjkhFj4qJltmWW4/7vtsPAGYCIil2OVgQdm78TGY5xoR82x8FGTo0XVuO3LLahvtIqOQkREHWQyW3H7V1txpJA7ItFfWPgIAFBYVY8pn29GWS0X8SQicnVV9Wbc+uVW7rtLTVj4CA1mC+78ehuyy+pERyEiIhvJLKnFXd9sQ6OFV22IhY8APD5/D3acLBcdg4iIbGzT8VL830JOwiMWPo/3ybpjmL89R3QMIiKyk9lbsvDp+mOiY5BgLHwebHVGIV5eckB0DCIisrOXlxzEau6a5NFY+DzU0aJqPPDdDnD1FSIi92exynjgux04XMCZu56Khc8DVdQ14vYvt6Kq3iw6ChEROUhVw6mZu6WcueuRWPg8jMUq475vt+NYcY3oKERE5GAnS2tx37dcXN8TsfB5mFeWHMD6w8WiYxARkSC/Hy3Ba8syRMcgB2Ph8yBL9+bjk/XHRccgIiLB/rf2KJbtyxcdgxyIhc9DnCypxb/n7RIdg4iInMTD3+/Ccd7e4zFY+DxAg9mCe7/djkpO0iAioj9VNZhx9zfbUN9oER2FHICFzwO88PMB7MmpEB2DiIiczMH8Kjy9iDtxeAKV6ABkXz/vzsXXGzNFxyByexUb56J87Zfw7nsRAkbfAQCo2rkUNfvXwFRwFLKpDtHTZkOhM7b4OtkzboGl8swFco29JyFw7N0AgNKVn6Bm70pIah38hk+BsfvIpuNqDv6Gmr0rEXLFf2z40ZE7+35rNgbEBeLyvlGio5AdsfC5sePFNXjshz2iYxC5vYa8Q6jauRTq4C7NHpcbG6CP7wt9fF+Ur/2yTa8VPuUtwPrXZvem4kwUznkKhpQhAIDaI5tQc2AtQq56HuayXJQseQf6uD5QevnC2lCD8nVfIfSaF2z2sZFneGrhXqRF+SIp1Ft0FLITXtJ1U/WNFtwzazuqG3jfHpE9WU11KP7pdQSOv/+M0Tuf8y6G78AroY1IbvPrKb18oTT6N73VHdkMlV84tNFpAIDGkizootOgDU+EIXU4JI0XzBUFAICy1TPh3XsiVD4htvsAySPUNVpw/7c7eD+fG2Phc1PP/bwfB/IqRccgcnulK2ZA3/U86Lv0svlry5ZG1OxfA2P6GEiSBADQBMfBlH8ElvpqNOQfgWxugMo/AvXZ+2AqOArvvpNtnoM8Q0ZBFf679KDoGGQnvKTrhn7dX4BvN50UHYPI7dXsXwtT/tFTl2HtoPbQRljrq2HoMarpMX18Xxi6j0D+lw9CUmkQNOlBKNRalC77EIGTHkTVjl9Qtf1nKPU+CBh3HzTBsXbJRu7pi99P4IKUEAxLDBYdhWyMI3xuprTGhMfm8749InszVxahdOUnCJr8MCSVxi7nqN69HPr4vlB5BzZ73G/o9Yi88xNE3PoBvJIGo+KPudB16QVJoUTFH3MQdv2rMKaPRcniN+2Si9yXLAMPz92FMu6363ZY+NzM4/N3o7i6QXQMIrdnyj8Ca2058r6YhsxXL0LmqxehIWsvqrb9hMxXL4Js7dy9UOaKQtRn7oKx57gWj2ssyULN/tXwG3YD6k/ugS6qB5RevvBKGQZTwVFYG2o7lYM8T0FlA55YwIEDd8NLum5k7tYsLNtXIDoGkUfQxfZE+C3vN3us5Jd3oA6Mgs+AyyEplJ16/eo9K6D08oW+63nnPEaWZZQs+wD+F9wGhUYPyFbI1j8nap3+X9l6zucTncuSvfn4fmsWruoXLToK2QhH+NxEdlktnvtpv+gYRB5DofWCJrhLszdJrYVC5w3Nn8uzWKrLYCo4hsayPACAqegETAXHYKmranqdgtlPoHLbT81eW5atqN7zKww9RrVYHKt3LYNS7wOvhAEAAG1kN9Rn7kZDzkFUblkEdWBMq+v+EZ3Lcz/tx8kSjhC7C47wuQGrVca/vt+FKi7BQuRUqnb+gooN3zW9X/DtYwCAwInTYUwbDQBoLMuHtq75jPr6EzthqSyCMX3MOV/bUlOGij++R9gNrzU9po1Ihk//S1E471kovHwRNOlBW3445GGqG8x48Pud+P7OQVAqJNFxqJMkWZZl0SGocz5edxQv/cKp9EREZHuPjEvGvSMTRMegTuIlXReXkV+F15cfEh2DiIjc1DsrD+NIYbXoGNRJLHwuzGqV8e95u2Ay86ZsIiKyD5PZisfn7wYvCLo2Fj4X9sXvJ7Aru0J0DCIicnNbTpThm42ZomNQJ7Dwuaic8jq8sTxDdAwiIvIQ/12agbyKOtExqINY+FzU0wv3osbETa6JiMgxqhvMeGrBXtExqINY+FzQz7tzsfJgoegYRETkYVYeLMSPu3JFx6AOYOFzMRV1jXiWCywTEZEgz/64j3vtuiAWPhfzypIDKKriXrlERCRGSY0Jz//MgQdXw8LnQjYdK8HsLVmiYxARkYebvyMHm46ViI5B7cDC5yIaLVY8sWAPuAwSERE5g2d+2g+Llb+UXAULn4uYueE4jhbViI5BREQEADiQV4lvN3FtPlfBwucCCqvq8e7KI6JjEBERNfPGikOcwOEiWPhcwH+XZKC6wSw6BhERUTPltY14nZsAuAQWPid3OLsA83dki45BRER0Vt9tPol9udzm09mx8DkzWUbikuuwMe4zDPLnNxMRETkfqww88+M+0TGoFSx8zmzPXCBnK0JzV+Jb03TMT1yOEG2j6FRERETNbDlRhkU7c0THoBZIssyFPpxSYx3wXj+gsvnlXIshBPN8b8Fjx9Mgy5KgcERERM2F+eiw+uER0GuUoqPQWXCEz1ltePeMsgcAyppCXJ37CvZF/hfXhOcJCEZERHSm/Mp6fL7huOgYdA4c4XNG1UXAu70AU3Wrh2ZFTcK9hRdjd6XR/rmIiIha4K1TYf2/R8LPSyM6Cv0DR/ic0frX21T2ACA6ezEWydPxbeIa+Kq5dAsREYlTVW/Gh2uOio5BZ8ERPmdTngW81xewNLT7qWbvKHxpvAXPH0+xQzAiIqLWaVUKrHlkBMJ99aKj0N9whM/ZrHmlQ2UPAFRV2bg17znsjnkLk0OKbByMiIiodQ1mK95ecVh0DPoHjvA5k6JDwIcDAdnS6ZeSJQWORl2KO3Mm4mgt/8oiIiLHUSokLJs+DAkh3qKj0J84wudMVr9gk7IHAJJsRULWD/hV/SA+SfgDeqVtXpeIiKg1FquM15ZxyzVnwsLnLHJ3APt/tPnLSg2VGJP9HnYF/wcPxhyz+esTERGdzbJ9Bdhxskx0DPoTC5+zWPkcAPtdXdeUH8O0wqewLe5/GBHAb0AiIrI/jvI5DxY+Z3BiA3B0lUNOFZi3DjPrp+HnxJ8RqevY5BAiIqK2+P1oCbZlloqOQWDhcw7rXnXo6SSrGT2yvsV6/cN4p+t2qBWct0NERPbx/qojoiMQWPjEy9kGHFsj5NSKuhJcnPM69oS9gFsjs4RkICIi97Y6owh7cypEx/B4LHyirX9TdALoSg/g/0oexcb4mejvVyk6DhERuZkPVnOUTzQWPpEKDwIHF4tO0SQsdwXmmKdjXtKvCNY0io5DRERuYum+fBwuqBIdw6Ox8In025uw58zcjpDM9eh38nNs9H4UL8XtgSQ5Vz4iInI9sgzusSsYd9oQpezEqT1zrWbRSVpUE9wLzzTehLn5YaKjEBGRC1MqJKx+aARiAr1ER/FIHOETZcM7Tl/2AMBQtBOvlj+EdQnfobt3jeg4RETkoixWGTPW8l4+UVj4RKgqAHbMEp2izSTIiMn+CT9jOr5OXAdvlfMXVSIicj4/bMtBQWW96BgeiYVPhI0fAhbXW/RYaqzBsKz/YUfAU3iiyyHRcYiIyMWYLFZ8/Uem6BgeiffwOZqpFnizG1BfLjpJp1WEDsRjtddhSVGQ6ChEROQiAgwa/P7YBdCplaKjeBSO8Dna7jluUfYAwLdgIz6sfhDLExcg3otD9ERE1LrSGhN+3JkrOobHYeFztM0fi05gU5JsQVLWXKxUP4iPEjZCr7SIjkRERE5u5u8nREfwOCx8jnR8HVC4X3QKu5AaKjAu+13sCn4W90WfEB2HiIic2IG8Smw8ViI6hkdh4XOkTR+JTmB3mvIjeLjoCWyN+wjnB5SLjkNERE5q5objoiN4FBY+RynLBDKWiE7hMEF5a/Fl/TT8lPQLwnUm0XGIiMjJrNhfgKzSWtExPAYLn6Ns+QSQPev+NsnaiLST32CD/mG82XUHlJJVdCQiInISVhn46o8TomN4DC7L4ghutBRLZ9QFdscr8lR8mRspOgoRETkBH50KG58YBS+NSnQUt8cRPkfYO8/jyx4A6Ev24dnSR/B716/Qx7dKdBwiIhKsst6MxbvzRMfwCCx8jrD9K9EJnEpEzlL8YJmG7xNXwl/NbdqIiDzZ91uzREfwCCx89laUAWRvEZ3C6UjmevTP+gxbfR/Dc3H7RMchIiJBtpwow7GiatEx3B4Ln73t+Fp0AqemrM7FTXkvYm/067g8tEB0HCIiEuD7rdmiI7g9Fj57spiBXXNEp3AJxqLteL3iX1iTMAcpRk7TJyLyJD9sz4bZwpUc7ImFz54OLwNqCkWncBkSZHTJXoQliun4IvE3GFSetYwNEZGnKqpqwJqMItEx3BoLnz3t+EZ0ApckmaoxIutD7Az8P/w79rDoOERE5ABzOHnDrlj47KW6EDi8XHQKl6auOIF7Cv6DnV3ex9igUtFxiIjIjlYfLERRVYPoGG6Lhc9edn0HWLnkiC345f+Oj2qmYWniInTR14uOQ0REdmC2ypi/nZM37IWFz152fic6gVuRZAtSsuZglfZfmJGwGVoFb+4lInI3C3bkiI7gtlj47KFgP1B0QHQKt6SoL8eE7LexO/Q53B2dKToOERHZ0MH8Khwp5E5M9sDCZw/75otO4Pa0ZYfwaNHj2BL/KYb4V4iOQ0RENvLTLm61Zg8sfPawb4HoBB4jOHcVvjFNw6LEJQjTmkTHISKiTvp5d67oCG6Jhc/W8nYDJUdEp/AoksWEnllf43fDI3gtfieUEu/vIyJyVUeLanAgr1J0DLfDwmdrvJwrjKK2CFfmvoo9kf/F9eH8C5GIyFVxlM/2WPhsbS8Ln2hexXvwYtnD+C3hG/Ty4YbcRESu5ufdvI/P1lj4bClnG1DOmaPOIir7FyyQp+O7xNXwVXNNRCIiV5FZUos92ZyQZ0ssfLbE0T2nIzXWYlDWJ9jm9zj+04VL5RARuQpe1rUtFj5b2v+j6AR0DqqqHNyc/zz2xLyJi0MLRcchIqJWLN7Dy7q2xMJnK/l7gYqTolNQK7wLt+Ltyn9hVcJcJBnqRMchIqJzyC6rw8F8zta1FRY+Wzm0VHQCaiNJtiI+ewGWqabjs8TfYVByGRciIme06iCvyNgKC5+tHFomOgG1k9RQhVFZ72Nn0P/hoRiunUhE5GxWHWDhsxUWPluoKQFytopOQR2krjiO+wufxvYuH2JUYKnoOERE9KcdWeUor+UuSrbAwmcLR1YAMi8LurqA/N/wad10/JL4E6J0DaLjEBF5PItVxtpDRaJjuAUWPlvg/XtuQ7KakZr1HdbpH8J7XbdCrZBFRyIi8mgreVnXJlj4OstiBo6sEp2CbExRV4rJOW9ib9hzuC0qS3QcIiKPtfZQESxW/vHdWSx8nXXyD6CBq4G7K21pBp4qfhSb4j/HAD8uD0BE5GgVdY3YllkmOobLY+HrrMOcnesJQnN/xezGaZifuAzBmkbRcYiIPAqXZ+k8Fr7OOrZGdAJyEMnSgD5ZX2Kj97/xSvweSBIvMRAROQInbnQeC19n1Jae2mGDPIqypgDX5L6MfZGv4ppwbv1DRGRvB/MruTxLJ7HwdUbmBgAc5fFUXsW78HLZw1ifMAtp3jWi4xARuS1ZBjYe4zqpncHC1xnH14tOQIJJkBGdvRg/YjpmJa6Ft8osOhIRkVvaeKxEdASXxsLXGSdY+OgUqbEGQ7I+wg7/J/Bkl4Oi4xARuR0Wvs5h4euommKg8IDoFORkVFXZuD3/OeyOfRsXBheLjkNE5DYyCqpQVsP7+DqKha+jTqwH79+jc/Ep2Iz3qqfj18Qf0NWrTnQcIiKXJ8vApuMc5esoFr6O4v171ApJtiIh6wf8qn4QHydshF5pER2JiMilceJGx7HwddSJ30QnIBchNVRibPa72BX8DKZFHxMdh4jIZfE+vo5j4euI2lKgOEN0CnIxmvKjeLDoKWyL+wgjArhNEBFRe2UUVKGU9/F1CAtfR2RvFZ2AXFhg3lrMrJ+OnxMXI1LXIDoOEZHLkGVgx0n+wdwRLHwdkbNNdAJycZK1ET2yZmG9/mG83XU7lJJVdCQiIpewK6tcdASXxMLXESx8ZCOKuhJckvM69kW8hFsis0THISJyeruyK0RHcEksfB3Bwkc2pivZj6dLHsXG+Jno51slOg4RkdPanV0uOoJLYuFrr9JjQB2nhZN9hOWuwFzLNMxLXIFATaPoOERETqesthFZpbWiY7gcFr72yuboHtmXZK5Hv6yZ2Oz9KF6M3wtJ4gLfRER/t5P38bUbC1978XIuOYiyJh/X576EvVGv4cqwfNFxiIicBi/rth8LX3ux8JGDGYp24tXyh7A2YTa6e9eIjkNEJBwnbrQfC197WMxA/m7RKcgDSZARm/0jfpam46vE9TCouE0bEXmufTkVsFp5u0t7sPC1R+lRwFwvOgV5MMlUg/OzZmBXwJN4PPaQ6DhERELUmCw4UlQtOoZLYeFrj8L9ohMQAQBUlSdxZ8Ez2BX7LiYEF4uOQ0TkcAfyKkVHcCksfO1ReEB0AqJmfAs24sPqB7EscQHivTj6TESe40ghR/jag4WvPTjCR05Iki1IzpqLleoH8b+ETdAquE0bEbm/QwVcpL49WPjagyN85MSkhgqMz34He0Kfxb3RJ0THISKyq8Mc4WsXFr62aqwHSo+LTkHUKk3ZYTxS9AS2xn2MoQFcuoCI3FNmSS1MZl7RaCsWvrYqzgBkLoVBriMobw2+rn8APyYuQbjOJDoOEZFNWawyjhVzlK+tWPjaipdzyQVJ1kakZ32NDV4P442uO6CU+NcwEbmPwwUsfG3FwtdWLHzkwhS1xbg85zXsjXgFN0Xkio5DRGQThzlxo81Y+Nqq+LDoBESdpi/Zi+dKH8bvXb9CH1/+ZUxEro0TN9qOha+tyk6ITkBkMxE5S/GDZRrmJK6Cv9osOg4RUYew8LUdC19blWeKTkBkU5K5DgOyPsVW38fwXBzXmCQi15NVWgtZ5p66bcHC1xY1xYCJf0WQe1JW5+KmvBewN+YNXBZaKDoOEVGbNZitKKpuEB3DJbDwtQUv55IHMBZuwxsVD2J1wvdIMdaKjkNE1CbZZXWiI7gEFr62YOEjDyFBRlz2QixRTMcXib/BoOLak0Tk3Fj42oaFry3KuMMGeRbJVI0RWR9iZ+D/4ZFYzlAnIueVXcYrEm3BwtcWHOEjD6WuOIF7C/6DHV0+wJigUtFxiIjOkMMRvjZh4WuLMs7QJc/mn78BH9dMw9LERYjR14uOQ0TUhJd024aFry24JAsRJNmClKw5WKN9CB8mbIZWwW3aiEg8XtJtGxa+tqgqEJ2AyGko6sswMftt7A59HndGnRQdh4g8XE45R/jagoWvNXXlgIVr/BD9k7YsA48XP4bN8Z9ikH+F6DhE5KHqG60o5lp8rWLha001F6IlaklI7ip8a5qGhYlLEaJtFB2HiDxQURULX2tY+FpTzcu5RK2RLCb0yvoKGw0P49X4XZAkbnVERI5TWmMSHcHpsfC1poYjfERtpagtwlW5/8W+yFdwfXiu6DhE5CFKWPhaxcLXGl7SJWo3r+I9eLHsYfzW9Rv08uE+1ERkX6W8h69VLHytYeEj6rConF+wQJ6ObxPXwFdtFh2HiNwUL+m2joWvNSx8RJ0iNdZicNbH2Ob3OJ6OOyA6DhG5IV7SbR0LX2s4aYPIJlRVObgl73nsiXkTF4fyDykish2O8LWOha81ddw/lMiWvAu34u3Kf2FlwjwkGrhgKhF1Xkk1C19rWPha01AlOgGR25FkK7pmz8dy1XR8lvg7DEpu00ZEHVdSw0kbrWHhaw0LH5HdSA1VGJX1PnYGPY1/xRwVHYeIXBQv6baOha81LHxEdqeuOIYHCv8P2+Nm4ILAMtFxiMjFVDdwFYDWsPC1RJYBU43oFEQeIyBvPT6rm4ZfEn9ClI6XaIiobRotMswW3hrSEha+ljRUAeAWUUSOJFnNSM36Duv0D+HdhK1QK/g9SEStq220iI7g1Fj4WmLiDgFEoijqSnFR9pvYE/Y8bovKEh2HiJxcvYmFryUsfC3h/XtEwulKD+Kp4kexMX4m+vtVio5DRE6qloWvRSx8LWngCB+RswjLXYE5jdPwQ+JyBGsaRcchIidTx0u6LWLha4mJI3xEzkSyNKBv1hfY6P1vvBS/B5LE+/uI6BQWvpax8LXEzFmCRM5IWVOA63Jfxt6o13B1eL7oOETkBOp4SbdFLHwtsfKLh8iZGYp24pWyh7Au4VukeXMJJSJPxsLXMha+lsj84iFydhJkxGT/jB8xHd8kroW3iguwEnkiLsvSMha+llj5i4PIVUiNNRia9RF2BDyJJ7tkiI5DRA7GhZdbxsLXEl7SJXI5qsos3J7/LHbHvoOJwcWi4xCRg1g5h6tFLHwtYeEjclk+BZvwQfV0rEicj65edaLjEJGdWWU2vpaw8LWE9/ARuTRJtiIxax5+VT+IjxM2Qq/k9zSRu5JZ+FrEwtcSjvARuQWpoRJjs9/FruBn8EDMMdFxiMgOeEm3ZSrRAZwaJ20QuRV1+TFYem/Ep7U+qKstgMaqgI8+CAatH/RKIzSyFspGFaQ6QK41A7wHnMhl+EMjOoJTY+Fricyf9kTuolGhxlO9xuCXst0YflyHfN8boTUcxqEDv8BUV3vG8QqFEv5+4fD3jYCvdzCMugAY1D7QSnqoLRooGhRArQVyA39OEDkFSXQA58bC1xKlWnQCIrKBWq0R01MH4Y+yvQCAvCAzumfMxcbAK6APiEGI707kHNgA+W9/5FmtFpSUZqOkNLvF19bpfRAYEAk/71D4eP01Wqg9PVpYD8g1Fl5vcmIbs3bio02zsbsgA4XVJfjk0hcxPmnYOY9/cPFLmLd36RmPJwV2wcrbvgIALNi3HC+v/Qi1pjpcmTYR/xl1X9NxWRV5uH7OQ1g85RN4aw22/4A8lcTG1xIWvpYotaITEFEnlRiDcU98N+wv/2ttvh1BNUiasxndLxuAPaVRaKg9D8Fdu0E2r0PRiYPtev36ukrk5FQiBwfOeYwkKeDvH44A3wj4eofAqPOHl9oHWskLaosGSpMCqLFCbuB9wyLUmerRLaQrrkqfiDsWPNXq8c+OfgCPD7+z6X2L1YKxM2/BpJQRAIDS2nI8svRVvDnxccT4RWDqvEcxJLYPRicMBgA8ufxNPD78TpY9W2PfaxELX0tUvB+AyJVlBXbBnWEhyKo60ezxNcYsXK1QIGjBKwi/5gPk5cmoLDECmIioHn1QnrcC1SVFNsshy1aUluagtDSnxeN0OiMCA6Lg5xP252ih75/3Fuqg4mih3YzsOhAjuw5s8/E+WiN8tMam95ceWo+K+ipclTYRAJBZngsfrREXdRsFABgU0xtHSjIxOmEwFu7/FSqFChOSh9v2gyBAwcbXEha+lihZ+Ihc1b6IHrjHR4nS2vwz/q1EUQvERkI6noXENa+ivM/jqKs5NUmrOCcMCtX1iEk/hLyMVWhsqHdY5vr6auTkHkRO7rlHGSVJAX+/MPj7nRot9NYFwEvlDa3CC2qL9tRoYa0Vcj1HCx1lzu7FGNqlL6J8wwAAcQHRqGusx96CQ4j0CcPuvIO4Om0Syuur8Pr6z/D9tW+LDeymeEW3ZSx8LeElXSKX9HvcADyoqkBtQ+U5jymPD4bf8Syo8k4grWolNiuHA38OnFnNChRmpcAQEg+DYQtyMjYDTrLGlyxbUVqWi9Ky3BaP0+oMCAqIgp93GHwMf5+JrIPKfHomsgWwOMfH5aryq4qx+tgmvDf5/5oe89N5481JT2D6zy+i3mzC5T3GYUR8fzz8yyuY2udSnKzIwy0/PIFGqxn/GnJz06Vg6iSO8LWIha8lnLRB5HIWp4zEU42ZMJtbXlbpWKQSff78/8Z13yP5mt7IyPdpdkx9tQb11UMQltQDjbVrUJJ11E6pba+hvgY5uRnIQQv7CksS/HzDEOAfAV9jCHz0AfBS+fxttFACamWOFrZg3t6l8NEZMe4fkzwmJJ2PCUnnN73/x8mdOFB0DM+PmY6hH1+L9yf/ByGGAEz+6k4MiO6JIIO/o6O7HUmjFB3BqbHwtUTFET4iV/Jl+gS8UbUfMloftdrsX9ZU+AAgYv6zKL74HZQUnVkUywt9IeMiRKfloOTkCtRWlNkwtUCyjPLyPJSX57V4mFZnQKB/ZNO9hUatH/Qqb48fLZRlGXP2LMZl3cdC08IAQYPZhKeWv4m3L3wSJ8pyYLFaMCimF4BTl3935O3HmIQhDkrtviQ195JoCQtfS3gPH5FLkCHh9d4T8VX5njY/5zd9Fu7W6SDXn7pHTzLVI3X7DGxMuBONZ1lbT4KEouwoqLQ3ISb9AHIOrIalsdFmH4Mza6ivQW7eIeTmHTr3QZIEP99QBPhFwtcYDG99ALw0vtA1zURWut29hRuzduJEWQ6uSZ/U4nHv/v4Vhsf3R1pYMvYWHIL5b7s4ma1mWKxcy9EWFA4a4Zs6dSq+/PLLMx4/fPgwEhISzvqcI0eO4MUXX8SKFStQVFSEiIgIDBw4EA899BD69etn78gAWPhaxsLXYS+vb8D8g404WGyFXiVhcLQS/x2tRXLQX9+Q9WYZDy2rx+x9ZjSYZYxLUOHDiTqEGs/9V5osy/jPmgZ8sr0R5fUyhkQrMWOSDomBp163wSzjtp/qsehgI8KMCnw4SYfR8X99mb+2oQEnK6x4b6Lefh88OVSjQo3/6zUGi8vaXvYAwCRZYEmIh2LvXyVGfXQn0pJ2Yzt6nPN55kYlCrN6wC8yARrNRuQd2t7h7G5FllFeno/y8jMnyfydRuOFwIBI+PuGn5qJrPODXuENLf4cLTw9E9mBo4U1plqcKPtrBnVWRR72FRyGn94HkT6heGXtR8ivKsbbFz7Z7Hmzdy9G7/BUpATHn/O1DxWfwE8HV2Hp1M8AAF0DYqGQFJi962cEGwNxtOQkeoan2OcD8zCSxnEjfOPHj8fMmTObPRYcHHzWY7du3YpRo0ahR48e+Oijj5CSkoKqqiosWrQIDz30ENauXeuIyCx8LdJ4iU7gstZmmnHveRqcF6GE2Qo8saoBY7+pxf57jDBoTt1Y++DSeiw+bMbcK/Xw1Uq4b0k9Lvu+DhtuOffaVK9uMOHdTSZ8eYkecf4K/N/qBoz7phb77zVCp5Lw8bZGbMu14I9bDVhyxIzrfqhDwcNGSJKE42VWfLK9EVvv4NpX7qJWa8SDqYPw+58LKrdXYRdfhP3jqX5LZqDLde/gRG7LPx5rKnSowQiEd+uJ+vKVKMs72aEMnsZkqkVe/mHk5R8+90GSBF+fEAT4R8DPO/TUTGS1L3QKL6itGigblECdFXKdbUYLd+dn4KrvpjW9/9yq9wEAV/QYj7cmPYGC6hLkVBY0e05lQzV+yViLZ0c9cM7XlWUZjy19DU9fcB+8NKf+yNSrtXhz4uN4asVbMFka8fyY6Qj3PntRoPZx5D18Wq0WYWFhrR4nyzKmTp2KxMRErF+/HgrFX6W0V69emDZtWgvPti1Jlp1k6pkzqi0FXo0TncItFNVYEfJ6NdZO9cL5sSpU1MsIfq0K316uxxWpp+59OVhsQbcPavDHrV4YGHXmL1tZlhHxZjUeGqTBw4NP3V9ZUS8j9PUqfHGJHtf0UOOexXXw0Up4ZbQOdY0yvF6qQuHDRgQbFBj/TQ3u7KvBpd04GccdNC2o/I819trjnqJ0jPj0zBE6q08gtl3wMqrK23jJVpIREnUShceWo766qsN5qH00Gi8EBETC3+fUTGSj1h96lRFaWS9stJDECf+/gVAa7P/zferUqSgvL8fChQtbPXbHjh3o06cPvv32W1x77bV2z9YSjvC1ROcrOoHbqGg49b8B+lOje9vyLGi0otnl1pQgJWJ8JfyRZTlr4TteLiO/Wm72HF+dhAFRSvyRZcE1PdToGarE17sbUdcoY9lRM8KNEoK8JMza3QidSmLZcxPnWlC5vX7zzceIszyuqCxBWuYcbAy4HNa2lAVZQmFWLDTeNyO4yx7kHFgHq8V97lVzViZTLfLzDyO/jaOFvsYQeOsDYFD7QqswQGP9272FNhotJHEUWseN8P38888wGv9afHvChAmYO3fuGccdPnzqazMlRfxlexa+liiUgMYbMPEv9s6wyjKmL63HkGgleoSc+obMr5ahUQJ+uubrJoUaJORXn/0XbH61temYM55Tc+rfbumtxu4CC1I/rEaQl4Tvr9SjrB54ek091kwx4KlV9Zi9txFdAxT4/CI9In04q8vV7I/ojnt8VCg5y4LK7bVbUwjJ3w9yWfkZ/6bbsRLdLx+IPSURbX49U70KRTm9ERCbDKW0AQVH23dfIdmBLKOiogAVFQUtHqZR6xEQGAl/n3D4eAXCqPOHXukNDXRQm9WQGv4cLTRztNAZSWoFJJXjfp6PHDkSM2bMaHrfYDBg1qxZuPPOv7bcW7JkCZzpIioLX2v0fix8nXTv4nrsLbTgtxbuzbMVtVLCB5OaT8i4eVEdHuivwY58CxYeNGPXXUa8uqEBDyytxw9X8T5NV/JHXH88qKpETYPtvifrE6Og3Vx+1n8Lmv8Swq/5EHl57ZtFWV3mBWAMIrv3QlXhr6gsannZExLP1FiH/PwjyM8/0uJxTaOF3qF/Gy30gsaq5WihQJLOsXXGYDCcMSP3oosuwoABA5rej4yMxMGDp3bNOXjwIHr37u3QjP/EwtcanS9QkSU6hcu675c6/HzYjHVTDYj622hamFGCyQKU18vNRvkKamSEGc++WnrYn7N3C2pkhHuj2XN6hZ59KH/1cTP2FVrw6WQdHlnRgImJKhg0Eq7qrsb7X9Ta4CMkR2nrgsrtlRPrhfjNZ/83SZaRtOZVlPV5DPU17T9vSW4wJOXViEk/hvzDv8JUx685V1dRWYiKysIWj1Grdc1mIp85WihBrjFztNCGFDrxiy57e3vD29u72WO9evVCamoq3njjDVx99dXNJm0AQHl5Ofz8/BySj4WvNTo/0QlckizLuH9JPRYcNGPNFC/E+Tf/Iu8broRaAaw8Zsblf07ayCi24GSFjEHRZ//GjfOTEGaUsPKYGb3CTh1T2SBjU7YFd/c7cwmderOMe3+px6zL9FAqJFisf+2O1WgFLNyA3mV8lTYer1cfaNOCyu21O6gO515UA1DmHUd69SpsVpyPjpxetihQmJUAfUAMQnx3IufA75Blrrvmzhob65FfcBT5BS3vzOLtE4xAvz9nInsFwkvtA53C8Ndo4emZyPxR1SqF3jnrjCRJmDlzJkaPHo1hw4bhySefREpKCqqrq/HTTz9h+fLlXJbFaej9RCdwSff+Uo9v9zRi0TVe8NZKTfff+Wol6NUSfHUSbu2txr+W1yNAL8FHK+H+JfUYFKVsNmEj5f1qvDxKi0u7qSFJEqYP0OCF9Q1IDFQgzu/UsiwR3hIuSTnzS/n5tadG9HqHnyqHQ2KUeGRFPW7urcb7m00YEsMvf2cnQ8KbvSfhi/LddjvHau9sXNLKMca1c5B0TW8cyvdu5chza6jVoKG2P4ITukE2rUNRZgtbnpFHqKosQlVlUYvHqFQaBAZEw983DD6GYBh1fvBSekMDPUcL/8bRl3Tbo3///ti6dStefPFF3H777SguLkZ4eDgGDx6Mt99+22E5uCxLaxbeA+ycJTqFy5GePfum9TMv1mFqr1OjcacXXv5ubyMaLMC4rip8OEnXdOn29Ov8/TmnF17+eNuphZeHxijx4SQdkgKbjwruLbTg0jl12HmnoWndP6ss475f6jFrTyOSAxX49nIvJARw0oazalSo8XSvMfi5g2vstcfcb0IgZ+W2eIys0WH3ObZe64jgyDyU5a5AdWmxTV6PPJu3dxAC/CNPjRbqA2DQ+HrUaKG+ZzACrxU/E9aZsfC1ZukTwMYPRKcg8ii1WiP+lToYG8oPOuR8n/2RBu81O1o9zpTYBxvjbofZZJtLskqVBYHhh5B7cBXMpgabvCbRuahUmj/XLQyHrzG46d5CrfTnaGG9644WGodGwu/Clm7OIOcdA3UWhiDRCYg8SqkhCPckdMc+B5U9ADgRpUZaG47THN6OtKS92GFKtcl5LWYlCrO6wTssHl5eW5Bz8ByzR4hswGw2obDwOAoLj7d4nLcx8NRooU8ovPWBTaOFaqsWykYlpFoZcp3ZqUYLld7cCrU1LHyt8W596xQiso2swFjcFRaGk5Ut/0Kyta0BFW0qfADgv/gDxF73DjJb2XqtPeqqtKirGorw5DQ0VK9CaY5jP36iv6uqLkFVdQkyWzhGpdLA3z8C/r7h8DP8OVqo8oYWeqgsaigaFKfWLWx0zAQlhQ8LX2tc5pLu1KlT8eWXX57x+OHDh89YC8emjqwEvrnMfq9PRACAA+GpuNtXjZKGMoef28uqxhdvNAJtXPLF6huEbSNfavvWa+0gQ0ZIdDaKT6xAXWW5zV+fyJFOjxb6eofA2ysQxn+OFtYBcm3nRwuDbu0BXaK/bUK7KZca4Rs/fjxmzpzZ7LHgYDtvOs0RPiK72xjXH9NVlagRUPYAoFbRCDkhFtLBlpfROE1RUYy0k3Ox0e9SWG28vI8ECUVZ0VDppyAmdj9yDqyGxcZrDxI5yunRwpYolRoEBJwaLfT922ihrh2jhUqO8LXKpQqfVqtFWJiDC5h3uGPPR+RhfkkZiacaT6LRbPvRsvYojvNHcDtuG9RtX4HUywdgb4l9fkaYTUoUZqfBLyoBavUfyD+80y7nIRLNYjGhqOgEiopOtHic0eiPAL9I+PmE/XVvofLUTGSFkfukt8alCp8QXgGASgeY60UnIXI79lxQub0Ohcto7/WC4AUvI/zq99u99Vp71FToAVyAiNSeqC1difL8bLudi8iZVVeXobq6DCfRfKkmlUaLadN+EJTKdbjUImQ///wzjEZj09uVV17pmBP7tH3zdCJq3ekFlV+r3u8UZQ8AfvdteQHcs5GsFiSufQ06g/3/di7NC0SD6UrEpF8KrcFo9/MRuQrvQK6m0RYuNcI3cuRIzJgxo+l9g8HgmBP7RAKlxxxzLiI316hQ4z+9xuKnsj2iozSzVZsLydsbclVVu56nyj2G9KQ12Iyhdkr2F1mWUJgVB43vzQjpshvZB9ZDtnKbNvJsLHxt41KFz2Aw2HdG7rn4RDr+nERuqFZjwL+6D8EGJyt7ACBLgCkpGupt+9v9XOOa75B0TS8cynfMyFtjnRpFdX0RFJcChfwbCo7tc8h5iZyRd6CdJ2+6CZe6pCuMb5ToBEQur9QQhFu79XPY7hkdkRfT8cIWueAZBAQ59m/oqlIDKsrGIbL7DfAJCnXouYmchXcQR/jagoWvLQLiRCcgcmnZATG4KS4Bex28oHJ77Q3t+PZmUkMdUnd/ApXG8T9WS3JD0IhrEZN+IdQ6vcPPTyQSL+m2DQtfWwQKuIxM5CYOhKfixpAAZNbkio7SqnXencuoObQVaRoxl1dliwKFWUkwBN2KqNTBgCQJyUHkaL7BXC+3LVxmpw2hqouA11n6iNqraUFlc63oKG02d2YA5PzCTr3G0eveRWau0kaJOsY3uAqW+jUoPnlYaA4ie7tjxhfwDuAoX2s4wtcWxmBA6yM6BZFLWZo8AvcoSlyq7AFATULnF1KOW/wcjL5iF4KtKPJGddVkRKddA4N/oNAsRPai0etZ9tqIha+tAuJFJyByGd+kjce/TcfRaBW7e0ZHZEZpO/0aiopipGfPg0Ih/rJqUXYEoL4BMenjodJw+ylyLwERnFTZVix8bRXYVXQCIqd3ekHl/zrRgsrttT24fevwnYtu23J0C8izyWt1lqVRicKsVHiH3YaI5PNExyGymYDIaNERXAYLX1sFsPARtcSsUOGpPhMxs9z51thrjzVeWYDSNvffhcx/CWFhYu/l+7u6Kh1KC4chPOUWBER2ER2HqNM4wtd2LHxtxZm6ROdUqzHgvp4X4EcnXFC5vSoU9UCcbUYNJKsFSetfh87LeUofAJQV+KG29lLEpF0Bvbev6DhEHRYQxRG+tmLhayte0iU6K1dYULm9yuJtN8lBlXME6XXrbfZ6tiOhMDsGKq8piO4xCgqlS228RASAI3ztwe/wtgpKFJ2AyOlkB8TgrogIZDr5gsrtdSRCgi3vdDOunoXEa3vicJ6D9v9uh0aTCkU5PREQmwSV4nfkH9klOpJdVNTWY/HuAziYXwSTxYIgowFXn5eO6AC/sx4/e/MubD2RfcbjoT5GPDJ+OABge2YOFu8+CJPZjPPionFRr9Sm40pravHx2s2YPmYIdGqxM7bdlUKpgn9YhOgYLoOFr610voBvDFBxUnQSIqdwMDwVd/tqUOwCCyq31x/+JTYtfAAQueBZlFz4JkqLzTZ+ZduoLtMDGIXI7j1RXfwrKgrc579rrakR76/6HV1DAnHbsP4waDUorq6BXnPuInZxr1RMTEtuet8qy3hz+XqkR51atqemwYTvt+7GNef1RIDRC5+t34KEkECkRpza4m7+tr2YlJ7MsmdHfqFhUNjofltPwEu67RGWJjoBkVPYFHcebvaWUdxQKjqKXWzU5kDS23aLMkV9DVL3fCpk67X2KMkNgqnxasSkXwKtl/ONSHbE6oNH4eelwzX9eyIm0A+BRi8khwUjyHjuj0+vUcNHr2t6yy6rQJ2pEefFnbqEWFJdC71ajV4xEYgJ8ENCSCAKKqsBADtO5kCpUCAtqvNrOtK5cYZu+zj3Tx5nE9ZDdAIi4ZYmj8DdilJUN9aIjmI3ZskKc1KMzV9Xk7EFaZoDNn9dW5NlCYVZ8dD63YLo7udDUrj2r4p9uQWI8vfDV79vw38WrcCby9dj49H2Xa3ZdCwLiaFBCDB4AQCCvA0wmS3IKatAbYMJWaXliPDzQa2pEUv3HsKlfbrb40OhvwnkhI124SXd9uAIH3m4WWnj8d/qAy67xl57FMT6IMIOt7P5//wuYq57Dydznb9EmerUKKrrh+D4boBlHQqPO39ZPZvS6lr8UZ2J85PiMKpbArJKK7Bw5z4olQqc16X1m/4r6uqRkV+E6wb2anrMS6PGNf174rvNu9BosaBvbBSSw4Lx/ZZdGJLQBSU1tfj8t62wWK0Y2z0JPaM52mdrnLDRPix87RHKET7yXG/1noTPXXyNvfbYH9oIe90OHrfkeZSe/zyqK5zzfr5/qiwxAJiAqB59UJG3AlUlndtr2NFkyIjy98XE9BQAQKS/L/IrqrDxaGabCt/WE9nQqVXoERHW7PG0qDCkRf312NHCEuSWV+GS3j3wyi+rcf3A3vDWafHuyg2IDw6At67zu7jQX0K6cAes9nD+PzGdiX8X7qlLHsesUOHJPp5V9gBgvW++3V5bWVaItNwFkFzsJ3BxTigs0nWISZ8EtU4nOk6beet0CPXxbvZYiI8RZbV1rT5XlmVsOZ6FvrFRUCnP/R/MbLFg/va9uKJfGoqra2CRZXQNCUSIjxFBRgNOlpZ39sOgv1Hr9AiMsv1tF+7MxX7cCCZJQCjvyyDPUasx4H43WVC5vQ6oi6EICrDb6+u3LEVqYIHdXt9erBYFCrOSYQy6FZHdBp36uejk4oL8UVRV3eyxoqoa+Hu1PjHnaFEpiqtr0T++5fvFft1/BMlhwYjy94Usy7DKf932YJVlyLL73wbhSGHxCS5/b6mj8bPVXryPjzxEmSEQt3U7D7+50YLK7VWbaN97hEJ+eBGhYa75Y7iuRouS/EEITbwVgdHOvTD9sKQ4ZJaUY+X+IyiuqsH2zBxsPHYSQxK6NB3zy+6D+G7TzjOeu/l4FmIC/BDu633Gv52WX1GFnVl5GNcjCQAQ4m2EBGDTsZPYn1uAwspqRPv72faD8nBhCUmiI7gc1/xJIxILH3mAnIAY3BSXiD2Vx0RHESo72r6XLSWrBcm/vQmtk2291h4VRT6orr4I0WlXw8vPfiOinRET4IepQ/piR1YuXl+2Dr/uP4yLe6WiT2xk0zGV9Q1nXOKtMzViT3Ye+rew1Z4sy5i3bQ8u6tUNWtWp2+LVKiWu6d8TK/Yfwdyte3Bpn+7w9XKdS+CugIWv/SSZ48ztU7APmDFYdAoiu8kIS8Xd/hoU1bvnGnvtcVVlCq74YK/dz1N1wQ3YYh1k9/PYm1JtQWDoQeQcXA1Lo0l0HHJjd3z4BbwDg0THcCkc4Wuv4G6AlpuNk3va3OU8TPWRWfb+tMaQ7ZB71LxXfYOE8Fq7n8feLI1KFGZ3h2/EbQhP6is6Drkpo38Ay14HsPC1l0IBRPUTnYLI5pYmD8ddSvdeULm9CpXVkP522c+eohY8A/9A91gpq7ZSh7Ki4YjodjP8I2JFxyE3E9qVl3M7goWvI6IHiE5AZFOz0sbh0cZMNFobRUdxOuXxIQ45j6K+Bt33fw6V2n1+LJfm+6Ou/jLEpF8OnZFLWpFthPP+vQ5xn58sjhTdX3QCIpt5u/ckvFJ9AFbZKjqKUzoW4bgfk5oDm9BDl+Gw8zmELKEwKxYa76mI7nEBFEr3GMUkcThho2NY+Doiqh8gue6sOiLgrwWVP/OwBZXba0tghUPPF/DT24iJcL/ybapXoSinFwJjb0NoV652QB0jSQqE8ZJuh7DwdYTWGwhJFZ2CqMPqNF54oOcoj1xQub3W609C0mgces64pS/A4OOeI2FVZV6oKB2DyO43wTfEXpvXkbvyj4iE1stLdAyXxMLXUbysSy7q1ILK/bG+/IDoKC6hQbLAkujYiQfK0gKk5y9yua3X2qMkNwgmy1WISb8YGj1/gVPbhCcmi47gstz4x4mdceIGuaDTCyrv9vAFldurqIufw8+p3/wLugUWOfy8jiRbFSjM6gp9wK2ISh0KyZ0bLtlEbI+eoiO4LH53dVSXIaITELVLRlg33BgagBM1uaKjuJyMMIuQ84bOfwGhYe5/v3BDrRrFef0RnHAbgrukiI5DTiwmrZfoCC6Lha+jfKOAwATRKYjaZEuX83Czj8QFlTtog5+YkTbJYkbyhreg1bt/6QOAymIjqiomIqrHdTAGBIuOQ04mKKYLDH7+omO4LBa+zogfIToBUauWJQ/HXcoyVDVWi47isnZo8iD5illHTpWVgXTT70LOLUpxThisyusRkz4Jai33oKVTYjm61yksfJ0RP1J0AqIWfZs2Dv9uzITJyn1NO6shKUbYub1XfoWE8Dph5xfBalagMCsZhpDbEJkywCFb3JFzY+HrHBa+zogbxvX4yGm902sSXuaCyjaTGyN2JmnUQvfZeq096qs1KCkYgrCkWxAYFS86DgmiVKkQldpDdAyXxsLXGTpfILKP6BREzZgVKvxfn0n4tIJr7NnS7pB6oedX1FWj+/6ZULrR1mvtUV7oi+qaixGddhW8fHkfl6cJT0rh5f1O8syfHLbEy7rkROo0XpjWcxQWckFlm1tjzBEdAZoDG9FDf0h0DGEkSCjKjoJCexNi0sZAqVaLjkQOEpvWW3QEl8fC11ldWfjIOZR7BeC2bgOwjgsq20W2qgJSRJjoGAj88S1ER8iiYwhlblSiMDsNfpG3ITyRV1k8QWx6L9ERXB4LX2dFnQdojKJTkIfL9Y/BjfHJ2F15VHQUt1aVGC46AgCgqxtvvdYeNRV6lBWPQETqVPiFRYuOQ3aiNRgQFp8oOobLY+HrLKUa6DJUdAryYBlh3XBDWABO1Ii/5OjuTkQ6R8lSlOYjPf9HTlz9U2leAOpNVyAm/TLojN6i45CNxXTvCUnButJZ/AzaQvIE0QnIQ22J7ccFlR1oW2CV6AhN9JsXo1uwe2+91i6yhMKsLtB434zoHiOgUHIFBXfBy7m2wcJnC8kT4da7nJNTWp58Pu5SlXNBZQdaazgJqJxjlA8AQn94ASGhLDZ/Z6pXoSinDwK63I7QrlzGwx3E9e4nOoJbYEuxBWMIEMkvSHKc73qMwyONJ7mgsoNVSybI8c5zr5hkMSP5j7eg8ZCt19qjutQLFaVjEdn9RvgEO8e9l9R+IXFd4RMUIjqGW2Dhs5WUSaITkId4t9ckvFTDBZVFKY0PFB2hGfXJDPRs3Cg6htMqyQ1Go3w1YtIvgkYvdvFsar/E8waJjuA2WPhsJeVC0QnIzZkVKjzdZxI+4YLKQh0Kc74lUbx//QJdw8UuDO3MZIsChVkJ0AfeiqjUIZB4C47LSOjPwmcr/Kq3laAEIChJdApyU6cXVF7ABZWF2+hfIjrCWUUv/A/8ArkQcUsaatQozhuAkITbEBzLn9fOzj88AkHRsaJjuA0WPlviZV2yAy6o7Fw263IgGQ2iY5xBUVeN7ge/8Nit19qjotiIqsoLEZV2LQz+QaLj0Dl07TdQdAS3wp8MtpTMwke2lesfg5u4oLJTsUBGY2KM6Bhnpd33O3p4HRYdw2UUZ4cDqusRkz4BKo1WdBz6h6QBQ0RHcCssfLYU1Q8wit96idzDodAU3BgWiONcUNnp5Mc67+K+gYveRFSE6BSuw2JWojCrG7zDbkNESn/RcehPPsEhCE9MFh3DrbDw2ZIkAd0vFZ2C3MCW2H6Y6qtAYb1z3i/m6faGNIiO0KKuy7j1WnvVVWlRWjAU4Sm3ICAyTnQcj5fo4NG9/Px83H///YiPj4dWq0V0dDQmT56MlStXnvM5kiSd8TZ0qPPuvMXCZ2vpV4pOQC5uRRIXVHZ2633yRUdokbIkD2mFP3PrtQ4oK/BDbe0liEm/EnofP9FxPFbyQMcVpxMnTqBv375YtWoVXnvtNezZswdLly7FyJEjce+997b43JkzZyIvL6/p7ccff3RQ6vbjn4C2FtkXCOgKlPKeK2q/2T3G4uXaQ1xjz8kdVpdACgmCXFgsOso5eW38Cd2uOg/7C51r3UDXIKEwKxoq/U2Ijt2P3ANrYDGbRYfyGI6+nHvPPfdAkiRs3rwZBsNfE7K6d++OW265pcXn+vn5ISzMNW7l4gifPaRxlI/a791ek/BizUGWPRdRmxgpOkKrQuZz67XOMJtUKMpOh1/U7QhP7CU6jsdw5OXc0tJSLF26FPfee2+zsnean5+fw7LYGwufPaRfJToBuRCLpMR/uKCyyzkZrREdoVUKswkpf7wNjY6lrzNqKvQoK74AEalT4BcaJTqO2+s2ZLjDznXkyBHIsoyUlJQOPf/aa6+F0Whselu4cKFtA9oQC589BHYFIvqITkEuoF6tx/TeozGfCyq7nB1BNaIjtInq5EGkWzaJjuEWSvMC0dB4JWLSL4XWYBQdxy0Fx8YhND7BYeeT5dZ3zrnrrrualbq/e+utt7Bz586mtzFjxtgraqex8NkLL+tSKyq8/HFb6kCsKeOCyq5orSEbULjGj1CfFTPRNYJbr9mCLEsozIqD1ucWRHcfDslFvgZcRY+Rji1MiYmJkCQJBw8ePOcxzz33XLNS93dhYWFISEhoejvbZWFnwa9Ue+lxOSDxMgqdXZ5/NG6MT8EuLqjsskoUtUAX17m8F73oWfgGcOs1WzHVq1CU2xdBcbcjJD5VdBy3oFSr0W3YSIeeMyAgAOPGjcMHH3yAmpozR+3Ly8sREhLSrNS5KhY+e/EOBeLOF52CnNCh0GTcEBbMBZXdQHnXYNER2kxRU4keh76CUsW1WmypqtSAyrLxiOp+A3yCQkXHcWld+w6A3uj4Rc0/+OADWCwW9O/fHz/88AMOHz6MAwcO4N1338WgQYMcnsdeWPjsqfcNohOQk9ka2xdTfZUorHfe5Tyo7Y6Eu1Z50u79DT0Mx0THcEvFuSEw41rEpF8ItU4nOo5LcvTl3NPi4+Oxfft2jBw5Eg899BB69OiBMWPGYOXKlZgxY4aQTPYgyW25Y5E6xmwC3kwBarlbAgG/Jg3DY9Z8NFice5cGarsRdbG4523Xuyx/6LoPkJ0rOoX70hlMMHhvQ87BjQB/xbaJd2Awbn//M94TaUf8zNqTSgP0vFZ0CnICc3qMxUPmLJY9N/O7LhuSC47mdF3+Ery8ue6+vdTXaFCSPwihibciKCZRdByX0H34BSx7dsbPrr31vVl0AhLsvV6T8AIXVHZLJskCc2KM6BjtpizOQXrJEm69ZmcVRT6orpqMqLRrYPALEB3HeUkSuo9w3uVM3AULn70FJQBdholOQQJYJCWe6TMJH3NBZbdW2MVXdIQO8fp9IVKCS0XH8AjF2RGA5kbEpI+HSuP8C3Y7WnRqGvxCXWN7MlfGwucIfaeKTkAOdnpB5R+4oLLbOxDqunushs5/HsHces0hLI1KFGalwifsdkQk9xMdx6mImqzhaXgThyN0mwx4BXLyhoeo8PLHfYm9sJMLKnuE3/wKcYHoEB2kMJvQbeO7qOj2AEz1Frufr7ymCIs2foJ9WZvRaG5AkG8kbhjxCGKDk896/Ner/4tNh5af8XiYfyyeuupzAMCWw79i0aZP0dBYh4HJ43D54Huajiupysf7i/+Nf182A3qNcyyIW1ulRW3V+QhPSUd95UqU5WaKjiSU1suAxAGDRcfwCCx8jqDSnpq88cf7opOQneX7ReHO6Bgc44LKHmOvugBSgD/k0jLRUTpElbkf6clbsBX23Q6ytqEKby6chsSIXrhn4isw6nxRVJEDL8251127YvC9uHjA7U3vW6wWvDzvdvSOP7XXanVdBb5d+wZuGPFvBPmEY8aSJ5EU2RtpsafWTpuz/h1c3P92pyl7f1dW4AfgMsSkZ6Ho+HLUVVWKjiREt2EjoNZoRcfwCLyk6yh9pwLgHdLu7HBoMq4PD8Gx6mzRUcjB6hNdZ8eNs/FZ/hniI+w7g3zFztnwNwbjxpH/RpeQFAT5hKNbdD8E+0ac8zl6rRE+XgFNbyeLMlDXUI1ByeMBAMVVedBpDOibMBKxISlIiuiFgrKTAICtR1ZBqVChV7wz30MtoTArBirDzYjuMQoKpWeNwUiSAn0mXCQ6hsdg4XOUoESgq6te+KHWbIvpiylcUNljZcfoRUfotJgf7bv12p4TvyMmOBmfrXgWj315OV6Zdyc2HFjcrtf44+ASJEf1QYD3qR0tQnwj0WhuQFbxYdTUVyKzKAMRgfGobajCz1tm4qqh99vjQ7G5xgYlinJ6IiD2doQl9BQdx2Hi+54H//BI0TE8BgufIw26V3QCsoOVicNwp6YSVY3VoqOQILuDa0VH6DRFdQV6HP7abluvFVflYf3+HxHsE4l7J72CoamTMW/D+9iYsaxNzy+vKcb+rM0YnDKx6TEvrTduHPkovlr9X7y24F70TxqD1OjzsOCP/2F490tQUpmPV+bdiRe/vxU7jq21y8dlS9VlepSXjEJk95vgG3rukU930XfSJaIjeBTPGj8WLWEUEJIKFO4XnYRs5PseY/Fi7SGusefhVhuzcakkufyuCto969G960DsLu9i89eWZRkxwUm4aMBtAIDooETklZ3Ab/t/wsDkca0+f9Oh5dBrjUjvMqTZ4z3jhqJn3NCm9w/n7kJO6XFcOeR+PDP7Jtw86kn4eAXgtQX3IiE8Hd56f9t+YHZQkhsESboaMenHUHDkVzTU1oiOZHOh8QmITk0THcOjcITP0Qbe0/ox5BLe7zUJz3NBZQKQr6yGFOUeIzJBC19DpB0+FB+vAIT5xzZ7LMwvBmXVha0+V5ZlbDy4FP0Tx0ClPPdl50aLCXN+ewfXDpuOosocWK0WJEb0RKhfNEJ8o3CiwHVmzsuyhMKsrtD63YKo7ue73S4UHN1zPPf6CnIF6VcBhhDRKagTTi+o/BEXVKa/qezqPt/XCStetvnWa/FhPVBYntXsscKK7Kb78VpyOG8XiipzMChlQovHLds+C6nR5yE6OAlW2Qqr/NdSMxar2SX/ODPVqVGc2w/B8bcjpEs30XFswhgYhORBzjyZxj2x8DmaSgucd5voFNRB9Wo9Huw9hgsq0xmOR7nPHTLKomybb712QdrlOF54AMu2z0JRRQ62HF6JDQcW4/zuFzcds2jTp/hq1StnPPePg0vQJaQbIgLizvn6eWUnsO3oakzqNxUAEOoXA0mS8PvBX7A3cyMKyk8iNuTs6/25gsoSAyorJiCqx/XwDnTtPy56j7sQCiUX/HY0Fj4RzrsNULnehuuerkLvhzu6D8LqMt6DSWfaElAhOoJNef2+EMkhtltbMDYkBbePfRZbj67Gi3NvxdLt3+DywffgvMTRTcdU1pag9B+XeOsaqrHz+PoWR/dkWcZ3697CZYPuhlZ9asa0RqXFDSP+jSXbvsasta/jqiH3w88QbLOPR5TinFBYFNchJn0S1FrX+z2i1umRPnq86BgeSZJlF7/L2FX9+ACw/UvRKaiN8v2icFd0DI5yjT06By+rGl+8aQYaG0VHsRmrSoN9l72HokLX3T7OnekNDfDy3oacg5tcZsJQ7/GTccHNd4qO4ZE4wifKoPvAhZhdw5HQZNwQEcKyRy2qVTRCTogRHcOmFGYTUra8B42Ol9+cUV2NFiX5gxGWdCsCo7uKjtMqSVKgz8SLWz+Q7IKFT5TgJCCVK4w7u20xfTHFT4WCOi6oTK0rjgsQHcHm1Mf3Il3eKjoGtaC80AfV1RchOu1qePk579dg134D4BcaJjqGx2LhE+n8f4OjfM7r9ILKlaYq0VHIRWSEWVo/yAX5LPsU8REm0TGoBRIkFGVHQtLciJi0sVCqNaIjnWHAJVeKjuDRWPhECusBpEwSnYLO4vvuY/CQJRsNFvvuL0ru5Q8/9x0JtvfWa2QblkYlCrN7wC/yNoQn9RUdp0l8n/MQlpAkOoZHY+ETbfi/RSegf/ig1yQ8X5sBi+yeozVkP1s1uZC8vUXHsAtFdTl6HPkGCiWvSriCmgodyoqGI6LbzfAPF39v6eCrbhAdweOx8IkW3hNIankxUXIMi6TEs30m4X9cUJk6SJYAU1K06Bh2o929Dj18MkXHoHYozfdHXcPliEm/DDqjj5AMCecNQmic808qcXcsfM6Ao3zCNah0eLD3GMzjgsrUSbmxRtER7Cpw4auIDOcon0uRJRRmdYHGeyqie4x07KLHkoTBV13vuPPRObHwOYPIPkDCGNEpPFaF3g+39xjMBZXJJvaG1IuOYFeSLCNh5SvwMrrPziKewlSvQlFObwTE3o7QrmkOOWfSwKEIjunikHNRy1j4nMXwR0Un8Ej5fpGYmtAdOyqOiI5CbmKtd67oCHanLDyJ9LJlXGTARVWXeaGidAwiu98I35Bwu51HkhQYfMV1dnt9ah8WPmcRfR6QOFZ0Co9yNCQJN0SE4kh1VusHE7XRCVU5pPBQ0THszmvDfKSElIuOQZ1QkhsMk+VqxKRfBI3ey+avnzx4GAKj3PeeVlfDwudMRj8DSPxP4gg7onvjJn81F1Qmu6hO8IzFZcMWPIegEF7adWWyVYHCrAToA25FVOpQSDb6HSQpFBjE0T2nwnbhTEK7A+nXiE7h9lYlDsPt2mouqEx2kxmlFR3BIRSmBnTb+gHUWv4qcXUNtWoU5/VHcMJtCO6S3OnXSx02EgERkTZIRrbC71Jnc8GTgEonOoXbmtt9DP7FBZXJzrYHes4fE+pju5Eu7RAdg2ykstiIqopJiOpxHYwBwR16DYVSiYGXX2vjZNRZLHzOxjcK6H+H6BRuaUavSXiOCyqTA6w1ZgEqz7nU6bv0Y8Rx6zW3UpwTBll5HWLSJ0Klad+IdfcRo7lnrhNi4XNGw/4F6PxEp3AbFkmJ5/pMwodcUJkcpEKqB+KiRMdwqNgfn4WPP7decycWsxKFWSnwDrsNESkD2vQctU6PIdxVwymx8Dkjvf+p0ked1qDS4V+9x2AuF1QmByuNCxQdwaEU1eVIO/Ytt15zQ3VVWpQWDEFY8q0IjIpv8dgBl1wJg5+/g5JRe7DwOav+dwI+njVCYGsVej/c0WMwVnFBZRLgSITnFR/trjXo7ntSdAyyk/JCX1TXXIzotCvh5eN3xr/7BIeg76RLHJ6L2oaFz1mpdcAFT4lO4bJOL6i8nQsqkyB/+Hnmkj9BC/6LCG695rYkSCjKjoZCPwXRaWOgVP91GX/YtVOg0mgEpqOWsPA5s57XAJH9RKdwOUdDknBjRBgXVCahNupzIHnZfjFbZyfJMhJW/Rd6br3m1swmJYqy0+AbeTvCE3sjPCkFKUOGi45FLWDhc2aSBEx8jYsxt8POPxdUzq8rEh2FPJwFMsyJMaJjCKEqyER6xQpuveYBait0KCsZiQtueUx0FGoFm4Szi+wD9L5RdAqXwAWVydnkd/EWHUEYw/p5SA6pEB2DHCBlUDjC4oJEx6BWsPC5gtHPnJq5S+c0788Fleu5oDI5kf2hZtERhApf8Cy3XnNzGr0Kgy7pKjoGtQELnyvwCgBGPik6hdOa0WsSnuWCyuSE1vnkio4glMLUgJRt3HrNnZ03qQu8fDhRwxXwu9BV9LsVCEsXncKpWCUFnueCyuTEMtQlUAR51np8/6Q5uhvpil2iY5Ad+IcbkD6Sy4e5ChY+V6FQABNfB++CPuXUgspj8T0XVCYnV5PIDeR9l/wPcRGNomOQjQ27KhEKJWuEq+B/KVcSM+DUUi0erlLvizt6DMZKLqhMLiA7RmeT1ylobMS/c3Mx6PAh9D6UgYuPH8fe+rpzHv9EXi5SMw6e8Tb5+LGmY36qrMAFR49g4OFD+G9hQbPn5zSaMOHYUVRbbHOrROxPz3HrNTeSPCAM0d0CRMegduDdtK5m7AvAoWVAXanoJEIU+Ebgrpg4HOGCyuQidgbWILGTr1FhseD6k5no72XAR1HRCFAqkdnYCB+F8pzPeTwkFA8GhzS9b5FlXHriOMZ5n5o5XGY24+n8fLwUFo4otRp352RjgJcBI4xGAMBzBQX4V3AIjMpzn6M9FFWl6HF8NjYGXgGrRbbJa5IYeh8Nhl7V2a9qcjSO8LkaQxAw/mXRKYQ4FpKIGyLDuaAyuZTV3tmn1tTshM9KSxCmVuOl8HCk6/WI0mgwxGBATAu7GngrlQhWqZre9tbXo9JqxaW+fgCArMZGGBUKTPDxQZpej/5eXjhqOjXLfXFlJVSShDHetl1WRrdzFbr78vvX1Z1/dRJ0Bo7WuhoWPlfU8xogYYzoFA51akFlLRdUJpdTrKiBFNu5G9tXVVejh06H6Tk5GHrkMC47cRxzy8vb9RrzK8oxyMsLkX9uhRWr0aBelrG/vh7lFgv21tcjWatFhcWCd4uL8FRIaKcyn0vQglcQzq3XXFZ8r2Ak9A1p/UByOix8rurCtwCNZyzquiZhKG7XVqPCVCk6ClGHlHcN7tTzsxsbMbu8HLEaDT6OisY1fv54qbAACyvatrBxobkR62tqcPmfo3sA4KtU4uWwcDyel4erM0/gIh8fDDUY8VpRIa7380dOYyMuO3EcFx0/hmVVtvvek2QZiWtehd7AO4pcjdZLhfOvTRIdgzqI33Guyi8aGP0f4JeHRSexqx+6j8bzdUe5xh65tGORSvTuxPOtsoweOj0eDD5VHFN1OhxuaMCc8jJc4uvb6vMXVlTCW6nEqH9coh3t7Y3Rf3tsS20tDjU04MmQUIw/dgyvR0QgSKXE1ZmZ6Kf3QqDKNr8yVHknkFa1EpuVwwHezucyBl+eAIOvVnQM6iAWPld23m3A3h+Ak3+ITmIX/+s5ER9U7hUdw63UZNSg+Jdi1GXWwVxuRsz9MfDp69PsmPrcehR8X4CajBrIFhm6SB2i74uGJvDs94sde/kYajNqz3jcmG5El391AQAULylG0S+nLscHTwxG0IS/tmGqPVqL3K9y0fXprpCU7nmpb5N/WacKX7BKha7a5p//rhoNVlS3vo2gLMuYX1GOi3x8oGnhXkKT1YrnCvLx3/AInDSZYIGM87y8AABdNBrsrq/DSKPtrioY132P5Gt6IyPfp/WDSbioFH+kDokQHYM6gYXPlUkScNH7wP+GAOZ60Wlsxiop8FLvCZjDNfZsztpghS5GB//z/XHyvZNn/HtDYQOOv3gc/uf7I+TSECj0CjTkNEChPvfdHzH3x0A2/zVMY6mx4Mj/HYHveadGnuqz6lGwoACx02MBAJlvZcLYwwhdtA6yRUbul7mImBrhtmUPADbos3C3Vgu5oWNb//XRe+G4ydTssRONJkSoWr9xfktdLU42Nja7nHs2/ystwVCDAak6HfbX18Ms//XftFGWYY+JtRHzn0Xxxe+gpMizt6BzdiqtEiNvSBEdgzqJ9/C5uqAEYPi/RaewmQaVDg/1HseyZyfe6d4IvTz0jFG90wrnFcKYbkTY1WHQx+qhDdHCp7cPVD7n/ttQZVRB7adueqveWw2FRgHf/qcKX0NeA3RROhhTjTCmnip6DXmnik/xkmIYkg3wivey/QfrRBokCywJMR1+/k3+/thdV4ePSoqRaTLh58oKzC0vx7X+fk3HvFlUiMfyztzK7YeKCqTrdEjUnvtS3JGGBiyprMT9QacuGcdrNFBIEn4oL8fa6mocN5mQprPNeoJ/J5nqkbp9Brdec3IDL4qHT5BedAzqJH6XuYPB04DIfqJTdFql3hd39hiCX8v2iY7ikWSrjKrdVdCGaXHi9RM4cP8BHH3uKCq3te+G/bL1ZfAd4AvFn7/EtVFamApMMJWYYCo2oSG/AdooLRoKG1C2vgwhl3nGjL+iLn4dfm6aXo93I6PwS2UVLj5xHP8rKcFjIaGY7PPX/XvFZjPyGpvvZlFlsWBFVVWLo3uyLOOZgnw8GhIKL8Wp/2Y6hQIvhYXjw5JiPJWfh6dCQhGqts8yHOqjO5Gm2G2X16bOC4v34fZpbkKSZZm3zLqDkqPAR+cDpmrRSTqkaUFlrrHnMHun7m12D19jeSMypmdA0kgIvTwUhhQDqvdUo+CHAsQ9GgdDiqHV16w9Votjzx1D/NPxzUbtSleVonh5MQAgaGwQAi4IwPFXjyNwVCBkq4zChYWQlBLCrw+HIbn187iie4rSMeLT7aJjOK1j172DE7m8y8iZKNUKXPX4eQiIcM/vSU/DET53EdgVGPeS6BQdciwkETdyQWXx/vzTz6ePD4LGBUEfq0fwhcHw7umN0tVt29mlbF0ZtFHaMy7RBlwQgKRXkpD0ShICLghA2W9lUOgU8ErwQs7nOYi5PwZh14Yha0YWrI1WW39kTmGDT0HrB3mwLj8/B28/LubrTIZcnsCy50ZY+NxJ3ylAyoWiU7TLzuheuMlfizwuqCyc0lsJKAFtRPN7vbQRWjSWtL7xvbXBiopNFfA/37/F48xVZhQuKkTEDRGoPVYLbZgW2jAtjN2MkC0yTPmmFp/vqnZpCyD97Z47ak5RWYK0zDlQuPHkHVcS1zMIaSN4KdedsPC5m4veA4xholO0yakFlWu4oLKTUKgU0MfpmyZUnNaQ3wB1UOsjLxWbKyA3yvAb7NficXnf5iFobBDUAWrACsh/m/4pW2TIVve9y6Q+kb9AW6LbsRLd/XJEx/B4Rn8tLripm+gYZGMsfO7GKwC45EMAzv1X8vzU0ZhuzUG9pWPLVFDHWOotqMusQ11mHQDAVGxCXWYdTCWnRtWCJwSjcnMlSteUoqGgASW/lqBqZxUCLghoeo3sj7ORPzf/jNcuW18Gnz4+UBnPfR9W9d5qmApMCBh16vVOF8yq3VUoXVMKSSFBG+6+C7vmRrv3bGRbCJr/EsLD+atJFEkCRt+cyr1y3RDvkHVHCaOAAXcBm2aITnJWH/WciPe5oLIQdcfrcOK/J5rez//uVHHzG+KHqNuj4NPXBxFTIlC0uAh5s/KgDdMi5r4YGJL+uo/HVGI64++JhrwG1B6qRZeHu5zz3FaTFbnf5CL67mhIilMvoA5QI/yGcOR8mgNJLSHqtigoNO77y353SB3iRIdwcpIsI2nNqyjr8xjqa7g+n6P1ndAFkUkt35ZBromzdN1VYz3wyUigcL/oJE24oDJ5ukiLD956tW0TYDxd9fCrsVlxPrdec6CweF9c+nAfKBTOfYWIOsZ9/5T2dGodcMVMQO0cM6xMSi0e5oLK5OFylJWQorg9VVsY185BUmjrW8eRbWi9VBhzayrLnhtj4XNnISnAhW+JToEqnS/uTBuKFVxQmQhVXUNFR3AZkfOfQWAw7zxyhBHXp8AnkLtpuDMWPnfX82qg783CTl/oG44piWnYWnFYWAYiZ3IikgWmrSRTPbrt/AgqN76v0xmkDglHQl/P2PHGk/G7yBNM+C8Q3svhpz0WkoAbIiNwuPqkw89N5Ky2BnEZovbQHN6ONDUnedmLf5gXhl6dJDoGOQALnydQaYGrvgJ0fg475a7onpjir+eCykT/sM4rC1BxlK89/Bd/gNgIzti1NbVOifF3pEGtUYqOQg7Awucp/GOBSz+CI9bnW5swBLdr61BuqrD7uYhcTbVkgtw1RnQMlxO3+HluvWZLEjDm5lRuneZBWPg8SfJ4YOh0u55iQepoTLfmoc5Sb9fzELmykriA1g+iZhQVxUg7OZezSG2k/4VxiOsZLDoGORALn6e54P+ALsPs8tIf9ZyIp+sOwSzz0gtRSw6Fc3G5jtBtX4FU/1zRMVxefO9g9JvYRXQMcjAWPk+jUJ66n8+/i81e0iop8GKfC7l7BlEb/eFfLDqCywpe8DK3XuuEwEgDRk3pBkniSKmn4XeNJ/IKAK6dA2i8O/1SpxdUnl222wbBiDzDZk0OJCPvneoIyWpB4trXoDNw4kt7aQ0qTLgrHRodP3eeiIXPU4WkAFd8Bkgd/xLggspEHSNLQGNSrOgYLkuVewzpNWtEx3ApkkLCuNt7wDeYiyt7KhY+T5Y0DhjzXIeeWugbjqlcUJmow/JijKIjuDTjmu+QFFYtOobLGHxZV0SncLKQJ2Ph83SD7wd639CupxwP7oobIyNxiAsqE3XY3tAG0RFcXuSCZxAQxMuTrUkeGIZeo7kUkKdj4SNg0ltAzOA2Hbo7qiduCvBCbl2hnUMRube1Ppxt2llSQx1Sd3/CrddaEBLrjRHXJ4uOQU6A3yUEqDTA1V8Dfi3/Bbiu62DcpuOCykS2cExVBimU66B1lubQVqRpeB/x2XgH6DDxnnSo1NxJg1j46DRDEHDd94DO96z/vCB1NKbJ+VxQmciGahIjREdwC/4/v4/YCIvoGE5F66XChff3hMFXKzoKOQkWPvpLSDfgmm8BZfMfEJ9wQWUiuzgZxV/GthK3+DkYfbn1GgAoVQpMvCcdAeFc+of+wsJHzXUZClw6A4AEq6TAS70vxLtcUJnILnYEcZaprSgqipGePY9br0nA6JtTEZHgJzoJORkWPjpTj8thGfcSHuk9Dt+Vc0FlIntZZTgJKHl/la3oti1Ht4A80TGEGnpFIhL6hoiOQU6IhY/OSjnoHkRG9hcdg8itVSjqgdgo0THcSsj8lxAW5pkluvfYGPQcFS06BjkpFj46p3/1/RcuS7xMdAwit1beNUh0BLciWS1IWv86dF6eVfq6DQ7H4MsSRMcgJ8bCRy16euDTGBUzSnQMIrd1ONzD7zmzA1XOEaTXrRcdw2HiegZhxA0pomOQk2PhoxYpFUq8ev6r6B/Gy7tE9rA5oEx0BLdkXD0LieE1omPYXUSiH8be1p2TVahVLHzUKo1Sg3cveBepgamioxC5nQ26LEh6negYbilywbNuvfVaULQRk7iwMrURCx+1iUFtwIzRM9DFp4voKERuxSxZYU6MFR3DLSnqa5C651O33HotKNqIi6f3hkbvvoWWbMv9vgvIbgJ0Afh83OeI840THYXIrRTG+oiO4LY0GVuQpjkgOoZNnS57OgMXmqa2Y+Gjdgn2CsbMcTOR4MfZYES2sj+Uu9jYk//P7yImwio6hk2w7FFHsfBRuwXqA/H5uM+REsBZYUS28JtvgegIbi9uyfMw+rr25U+WPeoMFj7qEH+dPz4d+yl6BPYQHYXI5e3TFEIKDBAdw60pywqRlrsAkov+1mPZo85y0S99cga+Wl98MvYT9AzuKToKkcurT4wUHcHt6bcsRWqg642msuyRLbDwUacYNUZ8POZj9A3tKzoKkUvLitaLjuARQn54EaFhrvOrT3TZmzp1KiRJOuPtyJEj53yOLMv45JNPMGjQIPj4+MBoNKJ79+6YNm1ai88j+3Kdr3pyWl5qL8wYPQMDwgaIjkLksnYF1YqO4BEkqwXJv70JrQtsvSa67J02fvx45OXlNXuLizv7ag2yLOO6667DAw88gIkTJ2L58uXYv38/PvvsM+h0OrzwwgsOTk+nSbIsy6JDkHuoN9dj+urp2JC7QXQUIpcTYjXg/VcrAf5IdoiqC27AFusg0THOyVnK3tSpU1FeXo6FCxe26fjZs2fj2muvxaJFi3DRRRed8e+yLEOSuCuICBzhI5vRqXR494J3MTxquOgoRC6nUFEDKTpCdAyP4b3qGySEO+eoamSyPy79Vx/hZa8jvvvuOyQnJ5+17AFg2ROIhY9sSqPU4K2Rb2F0zGjRUYhcTkVCqOgIHiVqwTPwD3SupVoS+oVg8v09nWoHjZ9//hlGo7Hp7corrzznsYcOHUJycnKzx6ZPn9703KioKHvHpXNg4SObUyvUeG34a5jQZYLoKEQu5ViE899X5k4U9TXovv9zqNTO8aswfWQUxt7aHUqVc+Q5beTIkdi5c2fT27vvvotZs2Y1K4Hr168/5/OffPJJ7Ny5E08//TSqq6sdmJz+znn+hCC3olKo8PKwl+Gn88N3B78THYfIJWwNqEAv0SE8jObAJvRIGISdjYlCcwy6tCv6jHPOPZUNBgMSEprvrnTRRRdhwIC/JupFRp5aVigxMREZGRnNjg0ODkZwcDBCQkLsH5bOybn+jCC3olQo8cSAJ/BY/8eglDhyQdSadV4nIWk0omN4nICf3ha29ZpCIWHUlG5OW/bOxdvbGwkJCU1vev2pZYWuvfZaZGRkYNGiRYIT0j+x8JHdXd/terx7wbvwUnmJjkLk1OolMyxdY0TH8EhxS1+AwcexF71UWiUm3pOOlEHhDj2vPV1zzTW44oorcM011+C5557Dpk2bcOLECaxduxZz5syBUsk//kVh4SOHOD/qfHw14SuEevGmdKKWFMf7i47gkZSlBUjPX+Swrdd0RjUumd4bsT0CHXNCB5EkCXPmzMHbb7+NX375BaNGjUJycjJuueUWREdH47fffhMd0WNxHT5yqKLaIty36j7sL9kvOgqRU7q/MB3DPtsuOobHyr/yGewvCrbrOXyCdJh8fy/4hfKqBzkOR/jIoYK9gvHF+C8wMnqk6ChETul3vyLRETxa6PwXEBpmv8uOIV18cNkjfVn2yOFY+Mjh9Co93h75NqakThEdhcjpbNPkQfLxER3DY0kWM5I3vAWt3valL2VgGC57qA8MvlqbvzZRa1j4SAiFpMDD5z2M/xv4f1BJXB2I6O9MSdGiI3g0VVYG0k2/2+z1JIWEoVcmYtTUVCidZM0/8jz8yiOhrkq+Ch+M+gBGtVF0FCKnkRtrEB3B43mv/AoJ4XWdfh2tQYXJD/REz1Es8SQWCx8JNzhyML6e8DUiDNxHlAgA9gTXi45AAKIWdm7rtcBIA6587DxEpwTYMBVRx7DwkVNI8E/ArEmz0Dukt+goRMKt8ckVHYEAKOqq0X3/zA5dhu3aOxiX/7sffIP1dkhG1H4sfOQ0gvRB+Hzc57ilxy2QIImOQyTMSWU5pIgw0TEIgObARvTQH2r7EySg/+Q4jLujB9RaLjJMzoOFj5yKSqHCg30fxAejPoC/lgvQkueqTnCf3RdcXeCPbyE6ovUla9U6JSbelYbzJsVBkvhHKzkXFj5ySsOihmHu5LnoE9JHdBQiIU5Ecfa6M+naytZr/mFeuOLf/RDX076LNhN1FAsfOa1QQyg+H/c5bk+7HQpH7XdE5CS2B1aJjkB/oyjNR3r+jzjbwF3KoDBc+fh5CIjg7GpyXvwtSk5NqVDigT4PYMboGQjQcaYbeY41XlmAiqN8zkS/eTG6Bf+1E4paq8Tom1Mxakoq79cjp8e9dMllFNUW4bH1j2Fz/mbRUYgc4vt50cDh46Jj0N/IShX2XfE+LGo9xt/eg1ukkcvgCB+5jGCvYHwy9hPc3fNuXuIlj1ASHyg6Av2DZDFjUGAGrny0H8seuRT+1iSXopAUuKfXPfh4zMcI0geJjkNkV4fDeQHGmSgDAxH90f8Q9cAd3CKNXA6/YsklDQgfgLmT52Jg+EDRUYjsZpN/qegI9CfD8PMR/+MiGIcPFx2FqEN4Dx+5NKtsxdf7v8b7O95HvYXbUZF7UULC7Hc1kGtqREfxWJJWi5CHH0bAjTeIjkLUKRzhI5emkBSY0n0K5l80H+eFnSc6DpFNWSCjMTFadAyPpe/VC3Hzf2DZI7fAwkduIdonGp+N/QxPD3oaRrVRdBwim8mP9REdweNIXl4IfeJxxH47C9quXUXHIbIJFj5yG5Ik4cqkK7Hw4oUYETVCdBwim9gfahIdwaMYBg9G/I8/IuCmmyAp+CuS3Afv4SO3teT4Eryy+RWU1vPGd3JdieZAvPhagegYbk/h44PQRx+F3+WXiY5CZBf884Xc1oS4CVh48UJMjJsoOgpRhx1WlUAK5hJE9uQ9ZjTif/6JZY/cGkf4yCOszVqL5zc+j4JajpSQ6/lybSr0v+8WHcPtKIOCEPbUU/AZP050FCK74wgfeYTh0cOx8OKFuDLpSkg4y+7nRE4sK1onOoLb8b34YnT9+SeWPfIYHOEjj7Mlfwue/eNZZFZmio5C1CaXVybj6g/2iY7hFrSJiQh94nEYBg0SHYXIoVj4yCOZLCbMOjALn+z+BFWNVaLjELUo0OqFGa9VA1ar6CguS+nnh6AH7of/1VdDUipFxyFyOBY+8mhl9WX4YOcH+OHQDzDLZtFxiM7p+9nhwPEs0TFcj0oF/2uuQfD990Hp6ys6DZEwLHxEAI5VHMMbW9/Auux1oqMQndXHm9Pht3K76BguxTBkCEIffwzahATRUYiEY+Ej+puNeRvx+pbXkVGWIToKUTOP5fRGn6+2iI7hEjSxsQh59FF4XzBSdBQip8HCR/QPVtmKRUcW4b0d76Gorkh0HCIAwAW1XXDXO0dEx3BqCqMRQXffhYAbb4Sk0YiOQ+RUWPiIzqG2sRYz983El/u+RJ25TnQc8nAaWYlZb0uQ6+tFR3E+KhX8LrsMwQ/cD1UQF6kmOhsWPqJWFNQU4N0d7+Knoz9BBr9dSJzZP8VDsfeQ6BjOQ6mE7+TJCLr3Hmiio0WnIXJqLHxEbXSg5ADe2PoGNuVvEh2FPNS7e3oj7GfexweFAj6TJiH43nug6dJFdBoil8DCR9RO2wu245M9n+C3nN9ERyEPc3dRGkZ+ukN0DHEkCd7jxiH4vns585aonVj4iDroQMkBfLLnE6w8uRJWmQvikv2lm0Lw1Bu5omMIYRw9CsH33w9dcrLoKEQuiYWPqJOOVxzHZ3s+w+Lji2G2cvFmsq+5/zNCLisXHcNhjMOHI+iB+6Hv3l10FCKXxsJHZCN51XmYuW8m5h+ejwZLg+g45Ka+XpkC7ea9omPYlyTBeMEFCLrjduh79hSdhsgtsPAR2VhxXTG+3v81vs/4HtWN1aLjkJt55UgfxM/dLDqGXUhaLXwvvhgBU6dCGx8nOg6RW2HhI7KTSlMlvjvwHWYdmIWyhjLRcchNXFfeDZfM2CM6hk0p/fzgf9218L/+eqgCA0XHIXJLLHxEdlZnrsO8Q/Pw9f6vkVeTJzoOubhwizfeedU9/oDQdO2KgBtvgO/FF0Oh14uOQ+TWWPiIHMQqW/Fbzm+Ye2gu1mevh0W2iI5ELmruNyGQs1x0tq4kwTBsKAJuvAmGoUMgSZLoREQegYWPSIDC2kLMPzwfCw4vQG6Ni/7iJmE++yMN3mtcaz0+hbc3fCdfCP8bbuT9eUQCsPARCWSVrdiQswHzDs3Duux1MMtc1oVa939ZfZD2jQtM3JAkePXvD7/LL4P32LFQ6HSiExF5LBY+IidRVFuEBUcWYP7h+cipzhEdh5zYhJquuPndDNExzkkVHg7fSy6G32WXcY9bIifBwkfkZKyyFb/n/o55h+ZhbdZajvrRGbysanzxRiNgdp6vDUmthnH0KPhddjkMQwZDUihERyKiv2HhI3JixXXFWHB4ARYeWYiTVSdFxyEnMmdBLKSDR0XHgDYlBX6XXQafyRdC5e8vOg4RnQMLH5GL2F+yH8tOLMOyE8t4yZfwwc5eCF6yVci51TEx8Bk7Bt4TJnDLMyIXwcJH5IL2Fu/FshPLsPzEcs7y9VDTCnpiyOfbHHY+Tdeu8B47Bj5jx0LXrZvDzktEtsHCR+Tidhftxq+Zv2JV1v+3dz8xTeZ5HMc/TwsU6FDKX8UIqFRlIBhmZZ0FDmOiMujBeDWauDeNXDRhDh41Ade4iYlRs/HihT04WeNFEjUZvXiCrMxChBaVcVhMi8ofHcq/QjsHduuy4s7sCDztj/craXj6tH34XkjePE+f53mgH9/9aPc4WCW/n96gby6t7GF+V3m5PF83KKuhQa6yshX9XQBWFsEHGOT5+HM9GHyg7wa/U+9Ir2Liz9tUVkz69mqGYj/9tKzbTd+xY+FwbUOD0kpKlnXbAOxD8AGGCoVDevjPh3o4+FBdr7o0PT9t90hYZn+9v02pf+/9pG04PB65v/xS7rpaffbVV0rdsGGZpgOQSAg+YA2YnZ9V9+tudYY61RHqUPfrbs1GZ+0eC5/oz/7fqeT2/3cBZis1VRlffCF3Xa3cdXVKr6yU5XSu0IQAEgXBB6xBM/Mz+v7V9+oIdagz1KmeNz2aiybONd3w6/xxrFIH/vKPX3yfa9s2uevq5K6rVWZNjRyZmaswHYBEQvAB0GRk8n0ADneq900vF3xOAlvmcvSni68Xr7QspW3atLAXr/YPctfWKiU/354BASQMgg/AB8KRsB4PP1ZnqFOPXz1W/1i/puam7B4LS/jbt8XKWLdeGdXVC48dO+T0eu0eC0CCIfgA/KJoLKrBd4MKjAUUGA3Efw5PDts92pqSkZKhz3M/V0VehSryKlSZV6lN2ZvksLiNGYD/jeAD8Ju9nXkr/6g/HoH9Y/16Pv5ckWjE7tGSmsNyqMhdpFJPqTZnb47H3ebszcTdv4RCIZ0/f17t7e0aGhpSdna2fD6fjh49qmPHjinzI99TtCzrg3X19fV69OjRSo8M2IrgA7CsItGIBsYH1D/WL/+oXz+8/UHBcFDBcFDhSNju8RKGJUvr3OtUmlWqEk+JSj2lKvUsLBd/VqxUZ6rdIyasgYEB1dfXy+v16uzZs6qqqpLL5VJPT4+uX7+u48eP6+DBg0t+1rIs3bhxQ42NjfF1aWlpys3NXa3xAVsQfABWzbvZdwpOBOMBuGg5HNSbqTeKxqJ2j7lsnJZTeel58aAr8ZTEA684q1jpKel2j5iUGhsb9eTJE/n9frnd7g9ej8ViS+7JkxaC7/bt2zp06NAKTwkklhS7BwCwdnjSPPLkerQ9d/uSr0eiEQ2HhxcF4cj0iMKRcPwxGZnURGTi/fO5yVWJREuWstKylJOeI6/LqxxXjrzp//XT5VVOek78PZ40z0fDA7/NyMiI7t+/r9bW1iVjT1r6sC2w1hF8ABJGqiNVG7M2amPWxl/9mVgspqm5qfdROBdWeHZheSIyoUg0IoflkNNyymk55XA4lGKlxNc5LIecDmd8OcWx+LV0Z7qyXdnyurxyOrhAsd2ePXumWCym7dsX/9OQn5+v6emFu8k0NTXpwoULH93G4cOH5fyPi023tbWxxw/GI/gAJDXLspSZmqnM1EwVqMDucWCTjo4ORaNRHTlyRDMzMzpx4oTa2trir09MTMSXL126pL1798afFxUVreqsgB0IPgBA0vD5fLIsS4FAYNH6LVu2SJIyMjIkSefOnVNzc/OS21i/fr18Pt/KDgokGM7vBwAkjby8PO3bt09XrlxROPzxs74LCwvl8/niD2CtI/gAAEnl2rVrmpubU01NjW7evKm+vj4FAgG1tbXJ7/cv+n4egAUc0gUAJJWysjJ1dXWptbVVZ86c0dDQkFwulyoqKtTc3KyTJ0/aPSKQcLgOH5AgQqGQWlpa1N7erpcvX6qwsFDV1dU6deqU9uzZY/d4AIAkxh4+IAG8ePEifueAixcvqqqqSpFIRPfu3VNTU5P8fr/dIwIAkhh7+IAEcODAAXV3dysQCHxwMdnx8XF5vV57BgMAGIGTNgCbjY6O6u7du2pqalryzgHEHgDgUxF8gM3+feeA8vJyu0cBABiK4ANsxrcqAAArjeADbLZ161ZZlsWJGQCAFcNJG0AC2L9/v3p6ejhpAwCwItjDBySAq1evan5+Xrt27dKtW7f09OlT9fX16fLly6qtrbV7PABAkmMPH5AggsGgWlpadOfOHQWDQRUUFGjnzp06ffq0du/ebfd4AIAkRvABAAAYjkO6AAAAhiP4AAAADEfwAQAAGI7gAwAAMBzBBwAAYDiCDwAAwHAEHwAAgOEIPgAAAMMRfAAAAIYj+AAAAAxH8AEAABiO4AMAADAcwQcAAGA4gg8AAMBwBB8AAIDhCD4AAADDEXwAAACGI/gAAAAMR/ABAAAYjuADAAAwHMEHAABgOIIPAADAcAQfAACA4Qg+AAAAwxF8AAAAhiP4AAAADEfwAQAAGI7gAwAAMBzBBwAAYDiCDwAAwHAEHwAAgOEIPgAAAMMRfAAAAIYj+AAAAAxH8AEAABiO4AMAADAcwQcAAGA4gg8AAMBwBB8AAIDhCD4AAADDEXwAAACGI/gAAAAMR/ABAAAYjuADAAAwHMEHAABgOIIPAADAcAQfAACA4Qg+AAAAwxF8AAAAhiP4AAAADEfwAQAAGI7gAwAAMBzBBwAAYDiCDwAAwHAEHwAAgOF+BoytyY5xPJtwAAAAAElFTkSuQmCC"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>
+It's clear from the pie graph that in terms of shooting percentage, guards make up the most of the top shooters, then forwards, then centers. Centers make up most of the top 2pt shooters, looking at our previous plot. This makes sense since most of their shots are coming from inside the paint, which is the closest to the rim. Most centers are shooting mainly layups, which keeps their 2pt percentage higher than other positions.  
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>
+Q3: <i>How do players' shooting skills change as they get older?</i>
+<p>Let's examine the top 3pt shooters and how their percentage has changed over their career. Feel free to look at other statistics like the top 2pt shooters.
+We can actually the top 5 3pt shooters onto the same graph to compare between them easier.</p>
+</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Gets the top 5 players names from the top three point shooters</span>
+<span class="n">players</span> <span class="o">=</span> <span class="n">top_3pt_players</span><span class="p">[</span><span class="s1">'Player'</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Players</span><span class="se">\'</span><span class="s1"> Three-Point Percentage over Career'</span><span class="p">)</span>
@@ -9694,7 +9813,7 @@ How about we look at players shooting percentages over their years and their poi
     <span class="n">df</span> <span class="o">=</span> <span class="n">season_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">season_stats</span><span class="p">[</span><span class="s1">'Player'</span><span class="p">]</span> <span class="o">==</span> <span class="n">player</span><span class="p">]</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'Year'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">'ThreePP'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">player</span><span class="p">)</span>
 
-<span class="c1"># Add a legend to the plot</span>
+<span class="c1"># Adds a legend</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -9715,27 +9834,48 @@ How about we look at players shooting percentages over their years and their poi
 </div>
 </div>
 </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>
+As you can see, there is variation over their career. However, they seem to be pretty consistent considering the amount of years some of these players have played. There is also no crazy trend where all players start to decline linearly throughout their career. 
+
+<p>If we wanted to get a better understanding of the trends, we could use linear regression and plot the regression line to analyze the trend more clearly. Let's go ahead and do this with PPG over the top scorers in the NBA.</p>
+</p>
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">players</span> <span class="o">=</span> <span class="n">career_stats</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'PPG'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)[</span><span class="s1">'Player'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-<span class="c1"># Plot each player's data and label the line with their name</span>
+<span class="c1"># Make a plot for each player's data </span>
 <span class="k">for</span> <span class="n">player</span> <span class="ow">in</span> <span class="n">players</span><span class="p">:</span>
+    <span class="c1"># Gets all the seasons matching with the player's name</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">season_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">season_stats</span><span class="p">[</span><span class="s1">'Player'</span><span class="p">]</span> <span class="o">==</span> <span class="n">player</span><span class="p">]</span>
+
+    <span class="c1"># Makes a plot of PPG vs Year</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">player</span><span class="si">}</span><span class="se">\'</span><span class="s1">s Points Per Game over Career'</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Year'</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Points Per Game'</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'Year'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">'PPG'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">player</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'Year'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">'PPG'</span><span class="p">])</span>
+
+    <span class="c1"># Make and plot a regression line to see the trend clearly - from scipy docs</span>
     <span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">se</span> <span class="o">=</span> <span class="n">linregress</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'Year'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">'PPG'</span><span class="p">])</span>
     <span class="n">regression_line</span> <span class="o">=</span> <span class="n">intercept</span> <span class="o">+</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Year'</span><span class="p">]</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'Year'</span><span class="p">],</span> <span class="n">regression_line</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Regression Line'</span><span class="p">)</span>
+
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -9778,12 +9918,28 @@ How about we look at players shooting percentages over their years and their poi
 </div>
 </div>
 </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>
+With the linear regression lines, we can now easily see the downwards trend for PPG over player's careers. LeBron James and Kevin Durant have been consistent or increasing as their careers aren't near their end. 
+
+<p>Finally, coming down to the last question for data visualization, Q4: <i>How shooting has changed over different periods in the history of the game?</i></p>
+<p>Let's say we want to compare Jordan's era (say 1985-1995), to Lebron's era (say 2005-2015). We can compare stats such as the average shooting percentages and attempts from the shooting categories.</p>
+</p>
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">selected_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Year'</span><span class="p">,</span> <span class="s1">'ThreePP'</span><span class="p">,</span> <span class="s1">'ThreePA'</span><span class="p">,</span> <span class="s1">'TwoPP'</span><span class="p">,</span> <span class="s1">'TwoPA'</span><span class="p">,</span> <span class="s1">'FTA'</span><span class="p">,</span> <span class="s1">'FTP'</span><span class="p">]</span>
@@ -9799,7 +9955,8 @@ How about we look at players shooting percentages over their years and their poi
 
 <span class="c1"># Categories to compare</span>
 <span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'TwoPA'</span><span class="p">,</span> <span class="s1">'ThreePA'</span><span class="p">,</span> <span class="s1">'FTA'</span><span class="p">]</span>
-<span class="n">cat2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'TwoPP'</span><span class="p">,</span> <span class="s1">'ThreePP'</span><span class="p">,</span> <span class="s1">'FTP'</span><span class="p">]</span>
+<span class="n">categories2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'TwoPP'</span><span class="p">,</span> <span class="s1">'ThreePP'</span><span class="p">,</span> <span class="s1">'FTP'</span><span class="p">]</span>
+
 <span class="c1"># Plotting</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
@@ -9812,12 +9969,11 @@ How about we look at players shooting percentages over their years and their poi
 <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-
-<span class="c1"># Show the plot</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
+
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">cat2</span><span class="p">:</span>
+<span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories2</span><span class="p">:</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">([</span><span class="n">category</span> <span class="o">+</span> <span class="s1">' (1985-1995)'</span><span class="p">,</span> <span class="n">category</span> <span class="o">+</span> <span class="s1">' (2005-2015)'</span><span class="p">],</span>
             <span class="p">[</span><span class="n">period_1_means</span><span class="p">[</span><span class="n">category</span><span class="p">],</span> <span class="n">period_2_means</span><span class="p">[</span><span class="n">category</span><span class="p">]],</span>
             <span class="n">label</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
@@ -9827,8 +9983,6 @@ How about we look at players shooting percentages over their years and their poi
 <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-
-<span class="c1"># Show the plot</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -9860,7 +10014,24 @@ How about we look at players shooting percentages over their years and their poi
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>
+I found these plots to be very interesting. LeBron's era takes a lot less two pointers, more three pointers, and less free throws. A lot of people believe LeBron's era has too many <i>soft</i> calls, and that players should be able to play with less stoppage from fouls. However, looking at the data, it seems that there were more free throws attempted on average back in Michael's era. I think that this could also be explained as maybe there is less physicality in the games due to there being a lot more three pointers being attempted. It's much harder for players to get fouls on three pointers than it is driving and attacking the rim for a two.
+
+<p>Regarding the average shooting percentages, the categories seemed to be similar except for the three point shot. Players on average are much better at shooting 3's now than before. These plots truly show how the game has changed.</p>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 style="text-align: center">Hypothesis Testing and Machine Learning</h2>
+<p>In this next phase of our tutorial, we'll show how machine learning uncover hidden patterns and make predictions in NBA player statistics. We'll start by investigating a burning question: Does a player's height really impact their shooting percentage? We'll see if there's a meaningful link between the two. That's not all—we're also going to try and build a machine learning model that can predict a player's points per game (PPG) based on a bunch of different factors like their age, shooting percentages, and more.</p>
+<p>Using the .corr fuinction we can quickly find a correlation between height and shooting categories. -1 represents inverse correlation, 0 represents no correlation, 1 represents a correlation.</p>
 </div>
 </div>
 </div>
@@ -9869,7 +10040,7 @@ How about we look at players shooting percentages over their years and their poi
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">correlation_3pt</span> <span class="o">=</span> <span class="n">career_stats</span><span class="p">[</span><span class="s1">'Height'</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">career_stats</span><span class="p">[</span><span class="s1">'ThreePP'</span><span class="p">])</span>
@@ -9902,15 +10073,31 @@ TS%: 0.16193359777051675
 </div>
 </div>
 </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>
+There seems to be a an inverse correlation between 3p% and ft% with height. This means as height decreases, shooting perecentage in those categories increase. Furthermore, there seems to be a correlation between 2p% and ts% with height
+
+<p>Let's create a model with a machine learning algorithm - least squares - and fit our data onto it. We can then look at the coefficients, intercepts, and p values for each model.</p>
+</p>
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s2">"ThreePP ~ Height"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">career_stats</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Creates a model with OLS</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s2">"ThreePP ~ Height"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">career_stats</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'F-Statistic: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">fvalue</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'P-value: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">f_pvalue</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
@@ -9931,8 +10118,8 @@ TS%: 0.16193359777051675
 Dep. Variable:                ThreePP   R-squared:                       0.076
 Model:                            OLS   Adj. R-squared:                  0.075
 Method:                 Least Squares   F-statistic:                     199.1
-Date:                Tue, 15 Aug 2023   Prob (F-statistic):           1.65e-43
-Time:                        15:34:01   Log-Likelihood:                 1149.8
+Date:                Fri, 18 Aug 2023   Prob (F-statistic):           1.65e-43
+Time:                        18:57:43   Log-Likelihood:                 1149.8
 No. Observations:                2433   AIC:                            -2296.
 Df Residuals:                    2431   BIC:                            -2284.
 Df Model:                           1                                         
@@ -9965,7 +10152,7 @@ P-value: 1.646926742057543e-43
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [25]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">model2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s2">"TwoPP ~ Height"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">career_stats</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -9989,8 +10176,8 @@ P-value: 1.646926742057543e-43
 Dep. Variable:                  TwoPP   R-squared:                       0.053
 Model:                            OLS   Adj. R-squared:                  0.053
 Method:                 Least Squares   F-statistic:                     137.1
-Date:                Tue, 15 Aug 2023   Prob (F-statistic):           7.73e-31
-Time:                        15:34:01   Log-Likelihood:                 2916.1
+Date:                Fri, 18 Aug 2023   Prob (F-statistic):           7.73e-31
+Time:                        18:57:43   Log-Likelihood:                 2916.1
 No. Observations:                2433   AIC:                            -5828.
 Df Residuals:                    2431   BIC:                            -5817.
 Df Model:                           1                                         
@@ -10018,58 +10205,92 @@ P-value: 7.725894276480533e-31
 </div>
 </div>
 </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>
+From these models that we have built, we can see from the coefficients for height what each interaction means. Similar from before, Height has an inverse correlation with 3pt% and a correlation with 2pt%. We can also look at the p-value for our models. The lower the p-value, the more likely the model is accurate.
+
+<p>Using the intercept and coefficients for height we get the following equations:<br/>
+3pt%: y = 1.1745 - 0.0121x<br/>
+2pt%: y = 0.0696 + 0.0049x</p>
+<p>Based on these equations, you could caluclate your percentages from your own height to see what percentage you would likely shoot if you were in the NBA (an NBA caliber player).</p>
+<p>x = height (inches)</p>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>
+For the last part of the machine learning part of the tutorial, we can try and build a model that predicts PPG based on many features.
+</p>
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [249]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [31]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">model_data</span> <span class="o">=</span> <span class="n">season_stats</span><span class="p">[[</span><span class="s1">'Age'</span><span class="p">,</span> <span class="s1">'PPG'</span><span class="p">,</span> <span class="s1">'ThreePP'</span><span class="p">,</span> <span class="s1">'TwoPP'</span><span class="p">,</span> <span class="s1">'FTP'</span><span class="p">,</span> <span class="s1">'TSP'</span><span class="p">,</span> <span class="s1">'ThreePA'</span><span class="p">,</span> <span class="s1">'TwoPA'</span><span class="p">,</span> <span class="s1">'FTA'</span><span class="p">,</span> <span class="s1">'G'</span><span class="p">]]</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Get stats we want to use as features</span>
+<span class="n">model_data</span> <span class="o">=</span> <span class="n">season_stats</span><span class="p">[[</span><span class="s1">'Age'</span><span class="p">,</span> <span class="s1">'PPG'</span><span class="p">,</span> <span class="s1">'ThreePP'</span><span class="p">,</span> <span class="s1">'TwoPP'</span><span class="p">,</span> <span class="s1">'FTP'</span><span class="p">,</span> <span class="s1">'TSP'</span><span class="p">,</span> <span class="s1">'ThreePA'</span><span class="p">,</span> <span class="s1">'TwoPA'</span><span class="p">,</span> <span class="s1">'FTA'</span><span class="p">,</span> <span class="s1">'G'</span><span class="p">]]</span>
+<span class="c1"># Get the seasons where over 50 games have been played for all the players</span>
 <span class="n">model_data</span> <span class="o">=</span> <span class="n">model_data</span><span class="p">[</span><span class="n">model_data</span><span class="p">[</span><span class="s1">'G'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">]</span>
 
+<span class="c1"># Create our target</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">model_data</span><span class="p">[</span><span class="s1">'PPG'</span><span class="p">]</span>
+
+<span class="c1"># Remove the target from our features</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">model_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">'PPG'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="c1"># X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.15, random_state=42)</span>
+<span class="c1"># Train our model</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-<span class="c1"># Initialize and train a linear regression model</span>
-<span class="n">degree</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># Degree of the polynomial</span>
-<span class="n">poly</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="n">degree</span><span class="p">)</span>
-<span class="n">X_poly</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="c1"># Score our model</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">mse</span> <span class="o">**</span> <span class="mf">0.5</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_poly</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">feature_importances</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="k">for</span> <span class="n">feature</span><span class="p">,</span> <span class="n">importance</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">feature_importances</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">importance</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
+<span class="c1"># Print the evaluation metrics</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Mean Absolute Error: </span><span class="si">{</span><span class="n">mae</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Mean Squared Error: </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Root Mean Squared Error: </span><span class="si">{</span><span class="n">rmse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"R-squared: </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
+<span class="c1"># Get player's stats and use them to try and and predict how much PPG they would score with all their features</span>
 <span class="n">name</span> <span class="o">=</span> <span class="s1">'LeBron James'</span>
 
 <span class="n">player</span> <span class="o">=</span> <span class="n">season_stats</span><span class="p">[</span><span class="n">season_stats</span><span class="p">[</span><span class="s1">'Player'</span><span class="p">]</span> <span class="o">==</span> <span class="n">name</span><span class="p">]</span>
 <span class="n">player</span> <span class="o">=</span> <span class="n">player</span><span class="p">[</span><span class="n">player</span><span class="p">[</span><span class="s1">'Age'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">30</span><span class="p">]</span>
-<span class="c1"># print(player)</span>
-<span class="c1"># Predict PPG for a certain age using new data</span>
-<span class="c1"># # new_data = pd.DataFrame({'Age': [34], 'ThreePP': [player['ThreePP']], 'TwoPP': [player['TwoPP']], </span>
-<span class="c1">#                          'FTP': [player['FTP']], 'TSP':[player['TSP']], </span>
-<span class="c1">#                          'ThreePA':[player['ThreePA']], 'TwoPA':[player['TwoPA']], 'FTA': [player['FTA']], 'G':[player['G']]})</span>
 
-<span class="c1"># new_data = pd.DataFrame({'Age': [39], 'ThreePP': [.35], 'TwoPP': [.58], </span>
-<span class="c1">#                          'FTP': [.73], 'TSP':[.522], </span>
-<span class="c1">#                          'ThreePA':[8*55], 'TwoPA':[13*55], 'FTA': [5.2*55], 'G':[55]})</span>
-<span class="n">input_threepp</span> <span class="o">=</span> <span class="n">player</span><span class="p">[</span><span class="s1">'ThreePP'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">input_twopp</span> <span class="o">=</span> <span class="n">player</span><span class="p">[</span><span class="s1">'ThreePP'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">input_ftp</span> <span class="o">=</span> <span class="n">player</span><span class="p">[</span><span class="s1">'FTP'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">input_threepa</span> <span class="o">=</span> <span class="n">player</span><span class="p">[</span><span class="s1">'ThreePA'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">input_twopa</span> <span class="o">=</span> <span class="n">player</span><span class="p">[</span><span class="s1">'TwoPA'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">input_fta</span> <span class="o">=</span> <span class="n">player</span><span class="p">[</span><span class="s1">'FTA'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">input_tsp</span> <span class="o">=</span> <span class="n">player</span><span class="p">[</span><span class="s1">'TSP'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">input_g</span> <span class="o">=</span> <span class="n">player</span><span class="p">[</span><span class="s1">'G'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">new_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">'Age'</span><span class="p">:</span> <span class="p">[</span><span class="mi">34</span><span class="p">],</span> <span class="s1">'ThreePP'</span><span class="p">:</span> <span class="p">[</span><span class="n">player</span><span class="p">[</span><span class="s1">'ThreePP'</span><span class="p">]],</span> <span class="s1">'TwoPP'</span><span class="p">:</span> <span class="p">[</span><span class="n">player</span><span class="p">[</span><span class="s1">'TwoPP'</span><span class="p">]],</span> 
+                         <span class="s1">'FTP'</span><span class="p">:</span> <span class="p">[</span><span class="n">player</span><span class="p">[</span><span class="s1">'FTP'</span><span class="p">]],</span> <span class="s1">'TSP'</span><span class="p">:[</span><span class="n">player</span><span class="p">[</span><span class="s1">'TSP'</span><span class="p">]],</span> 
+                         <span class="s1">'ThreePA'</span><span class="p">:[</span><span class="n">player</span><span class="p">[</span><span class="s1">'ThreePA'</span><span class="p">]],</span> <span class="s1">'TwoPA'</span><span class="p">:[</span><span class="n">player</span><span class="p">[</span><span class="s1">'TwoPA'</span><span class="p">]],</span> <span class="s1">'FTA'</span><span class="p">:</span> <span class="p">[</span><span class="n">player</span><span class="p">[</span><span class="s1">'FTA'</span><span class="p">]],</span> <span class="s1">'G'</span><span class="p">:[</span><span class="n">player</span><span class="p">[</span><span class="s1">'G'</span><span class="p">]]})</span>
 
-<span class="c1"># Create input features array</span>
-<span class="n">input_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">80</span><span class="p">,</span> <span class="n">input_threepp</span><span class="p">,</span> <span class="n">input_twopp</span><span class="p">,</span> <span class="n">input_ftp</span><span class="p">,</span> <span class="n">input_tsp</span><span class="p">,</span> <span class="n">input_threepa</span><span class="p">,</span> <span class="n">input_twopa</span><span class="p">,</span> <span class="n">input_fta</span><span class="p">,</span> <span class="n">input_g</span><span class="p">]])</span>
 
-<span class="n">input_poly</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">input_features</span><span class="p">)</span>
-<span class="n">predicted_ppg</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">input_poly</span><span class="p">)</span>
+<span class="n">predicted_ppg</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">new_data</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Predicted PPG: </span><span class="si">{</span><span class="n">predicted_ppg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
@@ -10084,15 +10305,28 @@ P-value: 7.725894276480533e-31
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Predicted PPG: 23.329637891578685
+<pre>Age: 0.0012
+ThreePP: 0.0022
+TwoPP: 0.0025
+FTP: 0.0023
+TSP: 0.0139
+ThreePA: 0.0991
+TwoPA: 0.7648
+FTA: 0.0827
+G: 0.0313
+Mean Absolute Error: 0.40
+Mean Squared Error: 0.44
+Root Mean Squared Error: 0.67
+R-squared: 0.99
+Predicted PPG: 24.924136063982786
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>c:\Users\Guest1\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\base.py:464: UserWarning: X does not have valid feature names, but PolynomialFeatures was fitted with feature names
-  warnings.warn(
+<pre>c:\Users\EvanO\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\utils\_array_api.py:380: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  array = numpy.asarray(array, order=order, dtype=dtype)
 </pre>
 </div>
 </div>
@@ -10105,7 +10339,42 @@ P-value: 7.725894276480533e-31
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>
+Analyzing our model, it doesn't appear to be the most accurate. It seems two pointers attempted dominated as the most important feature. Additionally, we wanted our models to score close to 1, but we didn't get close. Making good models is not easy, but you can play around with it and see how good you can get your model to be! 
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 style="text-align:center">Conclusion</h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>
+As we conclude this tutorial, I want to say thank you for reading and following along. It was fun to go through the entire data science pipe line for the NBA. Together, we conducted exploratory analysis, uncovering the brightest stars in various shooting categories, deciphering trends across positions and careers, and observing the evolution of the game over time. Machine learning allowed us to investigate the correlation between height and shooting percentages, and to create predictive models. Armed with these newfound skills, you're now equipped to extract valuable insights from other datasets on your own. If you have questions about the NBA we didn't explore, try and work through them! 
+
+<p>Links to further material and references:<br/>
+<a href="https://www.kaggle.com/datasets/drgilermo/nba-players-stats">https://www.kaggle.com/datasets/drgilermo/nba-players-stats</a><br/>
+<a href="https://pip.pypa.io/en/stable/cli/pip_install/">https://pip.pypa.io/en/stable/cli/pip_install/</a><br/>
+<a href="https://pandas.pydata.org/docs/">https://pandas.pydata.org/docs/</a><br/>
+<a href="https://www.basketball-reference.com/">https://www.basketball-reference.com/</a><br/>
+<a href="https://www.learndatasci.com/tutorials/python-pandas-tutorial-complete-introduction-for-beginners/">https://www.learndatasci.com/tutorials/python-pandas-tutorial-complete-introduction-for-beginners/</a><br/>
+<a href="https://scikit-learn.org/stable/">https://scikit-learn.org/stable/</a><br/>
+<a href="https://matplotlib.org/stable/api/index">https://matplotlib.org/stable/api/index</a><br/></p>
+</p>
 </div>
 </div>
 </div>
